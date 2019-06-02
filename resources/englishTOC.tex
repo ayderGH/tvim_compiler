@@ -1,0 +1,18 @@
+%%%  Define the English Table of Contents
+\let\englishtableofcontents\tableofcontents
+\patchcmd\englishtableofcontents{{toc}}{{tec}}{}{}
+\preto\englishtableofcontents{\begin{otherlanguage}{english}\renewcommand{\contentsname}{\bf TABLE OF CONTENTS}}
+\appto\englishtableofcontents{\end{otherlanguage}\renewcommand{\contentsname}{\bf ÑÎÄÅÐÆÀÍÈÅ}}
+
+\newcommand{\addetoc}[2]{%
+  \addcontentsline{tec}{#1}{\protect\numberline{\csname the#1\endcsname}#2}%
+}
+\makeatletter
+\newcommand{\englishcaption}[1]{%
+  \ifnum\pdf@strcmp{\@captype}{figure}=\z@
+    \addcontentsline{lef}{figure}{\protect\numberline{\thefigure}#1}%
+  \else
+    \addcontentsline{let}{table}{\protect\numberline{\thetable}#1}%
+  \fi
+}
+\makeatother

@@ -1,0 +1,8 @@
+tvim:
+    year: 2019
+    number: 2
+    total number: 43
+path:
+    articles: ../articles_2019_2
+    resources: resources
+    output: output

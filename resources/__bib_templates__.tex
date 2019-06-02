@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Требования ВАК
+%%%     http://diss.rsl.ru/datadocs/doc_291wu.pdf
+%%%     http://rosmu.ru/activity/events/1056.html
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Оформление описаний книг
+
+    %<#1>   Автор/ы (Фамилия, пробел инициалы). 
+    %<#2>   Заглавие: сведения, относящиеся к заглавию.
+    %<#3>   Сведения об ответственности (редакторы, переводчики, коллективы). Сведения об издании (информация о переиздании,    номер издания). (Серия).
+    %<#4>   Место издания: Издательство.
+    %<#5>   Год издания. 
+    %<#6>   Объем (в страницах).
+
+    \newcommand{\tvimRefBook}[6]{\ifthenelse{\equal{#1}{}}{}{#1 }#2\ifthenelse{\equal{#3}{}}{}{~/ #3}.~--- #4, #5.~--- #6\;c.}
+
+%%% Оформление описаний статей или отдельных глав с указанием разных авторов из книги или сборника
+
+    %<#1>   Автор/ы (Фамилия, пробел инициалы). 
+    %<#2>   Заглавие статьи: сведения, относящиеся к заглавию.
+    %<#3>   Сведения об ответственности (авторы статьи) -- если совпадает с авторами статьи, то можно не указывать.
+    %<#4>   Заглавие книги: сведения, сведения, относящиеся к заглавию.
+    %<#5>   Сведения об ответственности (авторы книги); последующие сведения об отвественности (редакторы, переводчики, коллективы).
+    %<#6>   Место издания: Издательство.
+    %<#7>   Год издания. 
+    %<#8>   T.\;X.[~--- №\;X]
+    %<#9>   Местоположение статьи (начальная--конечная страницы).
+
+    \newcommand{\tvimRefArticle}[9]{#1 #2\ifthenelse{\equal{#3}{}}{}{~/ #3}~// #4\ifthenelse{\equal{#5}{}}{}{~/ #5}.~---\ifthenelse{\equal{#6}{}}{}{ #6,} #7.~---\ifthenelse{\equal{#8}{}}{}{ #8.~---} \mbox{C.\;#9.}}
+
+%%% Оформление описаний источников электронного ресурса удаленного доступа
+    %<#1>   Автор/ы (Фамилия, пробел инициалы). 
+    %<#2>   Заглавие. 
+    %<#3>   Название источника [Электронный ресурс]. – Режим доступа: 
+    %<#4>   URL (без знаков препинания в конце).
+    
+    \newcommand{\tvimRefEl}[4]{\ifthenelse{\equal{#1}{}}{}{~/ #1} #2~// #3 [Электронный ресурс].~--- Режим доступа:\\ #4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Harvard style: 
+%%%     http://www.staffs.ac.uk/assets/harvard_quick_guide_tcm44-47797.pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Books 
+
+    %<#1>   FAMILY/SURNAME, Initials. (1 author) 
+    %          OR FAMILY/SURNAME, Initials., FAMILY/SURNAME, Initials. and FAMILY/SURNAME, Initials. (2 or 3 authors) 
+    %          OR FAMILY/SURNAME, Initials. et al. or and others. (4 or more authors) 
+    %<#2>   Publication year
+    %<#3>   Book title -- italicized or underlined. 
+    %<#4>   Series title and volume if applicable. Edition –- if not the first. 
+    %<#5>   Place of publication: Publisher.
+    
+    \newcommand{\tvimRefBookEn}[5]{\noindent{#1 (#2) \textit{#3}.\ifthenelse{\equal{#4}{}}{}{ #4.} #5.}}
+
+
+%%% Journal article (printed)
+
+    %<#1>   Author(s) of article’s FAMILY/SURNAME, Initials. 
+    %<#2>   Publication year
+    %<#3>   Title of article. 
+    %<#4>   Title of journal -- italicized or underlined. 
+    %<#5>   Volume number 
+    %<#6>   Part number/month. 
+    %<#7>   Page numbers of the article.
+    
+    \newcommand{\tvimRefArticleEn}[7]{\noindent{#1 (#2) #3. \textit{#4}. \ifthenelse{\equal{#5}{}}{}{\;#5\ifthenelse{\equal{#6}{}}{.}{}}\ifthenelse{\equal{#6}{}}{}{\;(#6).} \mbox{p.\;#7.}}}
+
+%%% Journal article (electronic/online)
+
+    %<#1>   Author(s) of article’s FAMILY/SURNAME, Initials. 
+    %<#2>   Publication year. 
+    %<#3>   Title of article. 
+    %<#4>   Title of journal -- italicized or underlined. 
+    %<#5>   Name of Database the article is from if appropriate. 
+    %<#6>   Volume number (Part number/month in brackets). 
+    %<#7>   Page numbers of the article. 
+    %<#8>   URL. 
+    %<#9>   Accessed: followed by the date viewed.
+    
+    \newcommand{\tvimRefArticleElEn}[9]{\noindent{#1 (#2) #3. \textit{#4}. [Online] #5 #6. p.\;\mbox{#7}. Available from:\\ #8. [Accessed: #9].}}
+    
+%%% Website
+    %Author of website FAMILY/SURNAME, Initials or WEBSITE name if no author is available. (Year - in brackets) Title of website in italics or underlined. Any numbers if necessary or available if website is part of a series. [Online in square brackets] Available from: URL. [Accessed: followed by date in square brackets].
+    
+    %<#1>   Author of website FAMILY/SURNAME, Initials or WEBSITE name if no author is available.
+    %<#2>   Year.
+    %<#3>   Title of website in italics or underlined. Any numbers if necessary or available if website is part of a series.
+    %<#4>   URL.
+    %<#5>   Accessed: followed by date in square brackets.
+    
+    \newcommand{\tvimRefWebsiteEn}[5]{\noindent{#1. (#2) \textit{#3}. [Online] Available from:\\ #4. \ifthenelse{\equal{#5}{}}{}{[Accessed: #5].}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

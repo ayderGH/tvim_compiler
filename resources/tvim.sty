@@ -1,0 +1,383 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{myheadings}      % стиль оформления страницы -- колонтитулы
+                            % в вместе с номерами страниц
+
+\evensidemargin=-0.11 cm    % то же для страниц с четными номерами
+                            % (при одно сторонней печати игнорируются)
+\oddsidemargin=0 cm         % 1 дюйм = 2.54 cм
+%\oddsidemargin=0 cm        % 1 дюйм = 2.54 cм
+
+
+%\voffset=-1cm              % сдвиг всей страницы вверх на ___  как единого
+%%\topmargin=0.6 cm         % расстояние от верхнего края до нижнего
+                            % колонтитула минус 1 дюйм
+
+\textwidth=16 cm            % ширина текста
+\textheight=21.5 cm         % высота текста
+
+\footskip=1 cm
+
+
+\def\baselinestretch{1.1}   % печать с большим интервалом
+\parindent= 7mm             % абзацный отступ
+
+%\flushbottom               % все страницы одинаковой высоты
+%\raggedbottom
+\tolerance=1000             % терпимость к "жидким" строкам
+\relpenalty=10000           % запрет разрывов строк после бинарных
+                            % операций во внутритекстовых формулах
+\binoppenalty=10000         % запрет разрывов строк после бинарных
+                            % отношений во внутритекстовых формулах
+%\emergencystretch = 5pt
+
+%\thispagestyle{empty}      % удаляет с headers&footers с текущей страницы
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Убедительно просим не создавать новых макроопределений, кроме жизненно
+%% необходимых (внимательно изучите введеные ниже макроопределения,
+%% при составлении вашей статьи необходимо пользоваться только ими).
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\col}{col}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\exponent}{exp}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\ray}{ray}
+\DeclareMathOperator{\loc}{loc}
+\DeclareMathOperator{\per}{per}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\non}{non}
+\DeclareMathOperator{\cf}{cf}
+\DeclareMathOperator{\add}{add}
+\DeclareMathOperator{\Cham}{Cham}
+\DeclareMathOperator{\IM}{Im}
+\DeclareMathOperator{\esssup}{ess\,sup}
+\DeclareMathOperator{\meas}{meas}
+\DeclareMathOperator{\seg}{seg}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Lat}{Lat}
+\DeclareMathOperator{\Hyplat}{Hyplat}
+\DeclareMathOperator{\Alg}{Alg}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\Cyc}{Cyc}
+\DeclareMathOperator{\disc}{disc}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\Ray}{Ray}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Segm}{Segm}
+\DeclareMathOperator{\Com}{Com}
+
+%%%%%
+
+\DeclareMathOperator{\Sadj}{Sadj}%
+\DeclareMathOperator{\Fr}{Fr}%
+\DeclareMathOperator{\Ran}{R}%
+\DeclareMathOperator{\D}{D}%
+
+\DeclareMathOperator{\End}{End}%
+\DeclareMathOperator{\Dom}{Dom}%
+\DeclareMathOperator{\Lip}{Lip}%
+\DeclareMathOperator{\indlim}{indlim}%
+\DeclareMathOperator{\Projlim}{projlim}%
+
+\DeclareMathOperator{\Lin}{Lin}%
+\DeclareMathOperator{\Clos}{Clos}%
+\DeclareMathOperator{\Is}{Is}%
+\DeclareMathOperator{\Nl}{null}%
+\DeclareMathOperator{\card}{card}%
+\DeclareMathOperator{\sign}{sign}
+
+\def\const{\textrm{const}}
+\def\Box{\square}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\sectionmark#1{}
+\def\subsectionmark#1{}
+\def\ps@copyright{\let\@mkboth\@gobbletwo
+  \def\@oddhead{}%
+  \let\@evenhead\@oddhead
+  \def\@oddfoot{\small\sl
+    \def\@tempa{0}
+    \ifx\@volume\@tempa
+      Preprint submitted to \@journal\hfil\@date\/%
+    \else
+      Article published in \@jou@vol@pag\hfil\hbox{}\fi}%
+  \let\@evenfoot\@oddfoot
+}
+%ay
+\def\printed#1{\tiny\textbf{\emph{Статья поступила в редакцию #1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Обозначения для числовых множеств
+
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+
+\theoremstyle{plain} %% This is the default
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (без нумерации; текст утверждения
+% печатается курсивом)
+
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{property*}{Property}
+\newtheorem*{statement*}{Statement}
+\newtheorem*{condition*}{Condition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (без нумерации; текст утверждения
+% печатается курсивом) {РУССКИЙ ЯЗЫК}
+
+\newtheorem*{theoremr*}{Теорема}
+\newtheorem*{corollaryr*}{Следствие}
+\newtheorem*{lemmar*}{Лемма}
+\newtheorem*{propertyr*}{Свойство}
+\newtheorem*{statementr*}{Утверждение}
+\newtheorem*{canonr*}{Правило}
+\newtheorem*{conditionr*}{Условие}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (без нумерации; текст утверждения
+% печатается курсивом) {УКРАИНСКИЙ ЯЗЫК}
+
+\newtheorem*{theoremukr*}{Теорема}
+\newtheorem*{corollaryukr*}{Наслідок}
+\newtheorem*{lemmaukr*}{Лема}
+\newtheorem*{propertyukr*}{Свойство}
+\newtheorem*{statementukr*}{Твердження}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (с одинарной нумерацией; текст --
+% курсивом)
+
+\newtheorem{theorem}{Theorem}%[section] -- добавить к определениям всех
+\newtheorem{corollary}{Corollary}%%подобных окружений для двойной нумерации
+\newtheorem{lemma}{Lemma}
+\newtheorem{property}{Property}
+\newtheorem{statement}{Statement}
+\newtheorem{condition}{Condition}
+\newtheorem{conditions}{Conditions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (с одинарной нумерацией; текст --
+% курсивом) {РУССКИЙ ЯЗЫК}
+
+\newtheorem{theoremr}{Теорема}%[section] -- добавить к определениям всех
+\newtheorem{corollaryr}{Следствие}%%подобных окружений для двойной нумерации
+\newtheorem{lemmar}{Лемма}
+\newtheorem{statementr}{Утверждение}
+\newtheorem{canonr}{Правило}
+\newtheorem{conditionr}{Условие}
+\newtheorem{conditionsr}{Условия}
+
+\theoremstyle{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (с одинарной нумерацией; текст --
+% курсивом) {УКРАИНСКИЙ ЯЗЫК}
+
+\newtheorem{theoremukr}{Теорема}%[section] -- добавить к определениям всех
+\newtheorem{corollaryukr}{Наслідок}%%подобных окружений для двойной нумерации
+\newtheorem{lemmaukr}{Лема}
+\newtheorem{statementukr}{Твердження}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Определение окружений типа "теорема" (без нумерации; текст утверждения
+% печатается прямым шрифтом)
+
+\newtheorem*{definition*}{Definition}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{notation*}{Notation}
+\newtheorem{proposition*}{Proposition}
+\newtheorem*{example*}{Example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (без нумерации; текст утверждения
+% печатается прямым шрифтом) {РУССКИЙ ЯЗЫК}
+
+\newtheorem*{definitionr*}{Определение}
+\newtheorem*{remarkr*}{Замечание}
+\newtheorem*{notationr*}{Примечание}
+\newtheorem{propositionr*}{Предложение}
+\newtheorem*{exampler*}{Пример}
+\newtheorem*{proofr}{Доказательство}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (без нумерации; текст утверждения
+% печатается прямым шрифтом) {УКРАИНСКИЙ ЯЗЫК}
+
+\newtheorem*{definitionukr*}{Означення}
+\newtheorem*{remarkukr*}{Зауваження}
+\newtheorem*{notationukr*}{Примітка}
+\newtheorem*{exampleukr*}{Приклад}
+\newtheorem*{proofukr*}{Доведення}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Определение окружений типа "теорема" (с одинарной нумерацией; текст
+% утверждения печатается прямым шрифтом)
+
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+\newtheorem{example}{Example}
+\newtheorem{proposition}{Proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (с одинарной нумерацией; текст
+% утверждения печатается прямым шрифтом) {РУССКИЙ ЯЗЫК}
+
+\newtheorem{definitionr}{Определение}
+\newtheorem{remarkr}{Замечание}
+\newtheorem{notationr}{Примечание}
+\newtheorem{exampler}{Пример}
+\newtheorem{propositionr}{Предложение}
+\newtheorem{propertyr}{Свойство}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Определение окружений типа "теорема" (с одинарной нумерацией; текст
+% утверждения печатается прямым шрифтом) {УКРАИНСКИЙ ЯЗЫК}
+
+\newtheorem{definitionukr}{Означення}
+\newtheorem{remarkukr}{Зауваження}
+\newtheorem{notationukr}{Примітка}
+\newtheorem{exampleukr}{Приклад}
+\newtheorem{propertyukr}{Властивість}
+\newtheorem*{proofukr}{Доведення}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\allowdisplaybreaks     % Разрешение переносить на другую страницу часть
+                        % многострочной формулы
+\sloppy                 %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                       %%
+%%                    НЕ МЕНЯТЬ!!!                       %%
+%%                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\bibname}{\textbf{Список литературы}}%
+\renewcommand{\refname}{\textbf{Список литературы}}%
+\renewcommand{\labelenumi}{\theenumi.}%
+\renewcommand{\labelenumii}{\theenumii)}%
+
+%   --------------------    Список литературы  ----------------------
+%       Нумерация литературы -- без скобок []
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.\hfill}         %    Без []
+\makeatother
+%
+
+\renewcommand{\keywords}[1]{{\noindent\leftskip=0.5in\rightskip=0.5in
+\small\textbf{\textit{Keywords}}: \textit{#1}
+\medskip}}
+
+\newcommand{\keywordsr}[1]{{\noindent\leftskip=0.5in\rightskip=0.5in
+\small\textbf{\textit{Ключевые слова}}: \textit{#1}
+\medskip}}
+
+\renewcommand{\author}[1]
+{\begin{center} {\bfseries{\copyright~~~#1}}
+\end{center}}
+
+\renewcommand{\address}[1]
+{\begin{center}
+\tiny
+{\scshape{#1}}
+\end{center}\medskip}
+
+\renewcommand{\email}[1]{\medskip
+{e-mail:} \textsl{#1}\medskip}
+
+% Простая английская аннотация
+\renewenvironment{abstract}{
+\medskip
+\footnotesize}
+{\par\medskip}
+
+% Английская аннотация с заголовком и списком авторов
+\newenvironment{abstractX}[2]{
+\medskip
+\small
+
+\smallskip
+{\bfseries \scshape #1.}
+
+\smallskip
+{\bfseries #2}
+
+\smallskip
+\textbf{Abstract.}
+}
+{\par\medskip}
+
+% Простая русская аннотация
+\newenvironment{abstractr}{
+\medskip
+\footnotesize}
+{\par\medskip}
+
+
+% Русская аннотация с заголовком и списком авторов
+\newenvironment{abstractXr}[2]{
+\medskip
+\small
+
+\smallskip
+{\bfseries \scshape #1.}
+
+\smallskip
+{\bfseries #2}
+
+\smallskip
+\textbf{Abstract.}
+}
+{\par\medskip}
+
+
+\renewcommand{\title}[1]{
+\begin{center}
+{\bfseries #1}
+\end{center}}
+
+
+\setcounter{tocdepth}{0}
+
+\makeatletter
+\newcommand{\l@art}[2]%
+%{\hbox to\textwidth{#1\dotfill #2}}
+{\pagebreak[0]\vspace{1 em plus 1pt}%
+\@tempdima=3em%
+{\rightskip=\@pnumwidth%
+\leftskip=\@tempdima%
+\noindent\hspace{-1.5em}%
+#1\nolinebreak\dotfill\nolinebreak\rlap%
+{\makebox[\@pnumwidth][r]{#2}}\par\nopagebreak[3]}}
+\makeatother
+
+%%\numberwithin{equation}{section}%% Двойная нумерация формул

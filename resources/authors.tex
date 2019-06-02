@@ -1,0 +1,30 @@
+\newpage
+\thispagestyle{empty}
+
+\markboth{{\footnotesize{{\it \textbf{Список авторов номера}}}}} {{\footnotesize{{\it \textbf{
+Список авторов номера }}}}}
+
+\addcontentsline{toc}{art}{Список авторов номера}
+\addcontentsline{tec}{art}{Authors}
+
+\parindent=0pt
+
+\begin{center}
+%{\font\Font arialbd at12pt \Font \uppercase{Список авторов номера}}
+{\sf \textbf{СПИСОК АВТОРОВ НОМЕРА}}
+\end{center}
+\vskip 2pt \hrule height 1pt \vskip 2pt \hrule \vskip 0.5cm
+
+% Author's info
+%#1 - First Name
+%#2 - Last Name
+%#3 - Info
+%#4 - Email
+\def\authorInfo#1#2#3#4{
+    \medskip
+    {\def\arraystretch{0.1}
+    \begin{tabular}{p{5.2cm}p{10.5cm}}
+        \emph{\textbf{#1}} \par \emph{\textbf{#2}} & #3
+        \par \ifthenelse{\equal{#4}{}}{}{\textit{e-mail: #4}}
+    \end{tabular}}
+}
