@@ -11,11 +11,31 @@ logger = logging.getLogger('tvim')
 logger.setLevel(logging.INFO)
 
 
+def get_text_between_braces(text, open_pos=0):
+    """
+    Получить текст между фигурными скобками.
+    """
+    counter = 1
+    i = open_pos
+    while counter > 0 and i < len(text):
+        if text[i] == '{':
+            counter += 1
+        elif text[i] == '}':
+            counter -= 1
+        if counter == 0:
+            return text[open_pos:i], i
+        i += 1
+
+
 class Article:
+    """
+    Объектная модель статьи журнала.
+    """
     def __init__(self, path):
         self.path = path
         self.title = {}
         self.authors = {}
+        self.author_details = []
         self.udc = None
         self.msc2010 = None
         self.abstracts = {}
@@ -91,9 +111,8 @@ class Article:
 
     def extract_ru_abstracts(self):
         """
-        Извлечь аннотации.
+        Извлечь русскую аннотацию.
         """
-        # russian
         text = self.text
         self.abstracts['ru'] = ''
         begin_pattern = r'\\begin\{abstractXr\}.*'
@@ -111,9 +130,8 @@ class Article:
 
     def extract_en_abstracts(self):
         """
-        Извлечь аннотации.
+        Извлечь английскую аннотацию.
         """
-        # russian
         self.abstracts['en'] = ''
         text = self.text
         begin_pattern = r'\\begin\{abstractX\}.*'
@@ -132,21 +150,25 @@ class Article:
 
     def extract_sections(self):
         """
-        Извлечь разделы.
+        Извлечь разделы (главы) статьи.
         """
         text = self.text
-        pattern = r'\\section\*?\{(?P<title>.*)\}'
+        pattern = r'\\section\*?\{'
         self.sections = []
         for m in re.finditer(pattern, text):
-            self.sections.append(self.normalize_text(m['title']))
+            t = get_text_between_braces(text, m.end())
+            if t:
+                self.sections.append(self.normalize_text(t[0]))
         if not self.sections:
             logger.error('Не найдены разделы в {}!'.format(self.path))
+        else:
+            print(self.sections)
 
     def extract_bibliography(self):
         """
         Извлечь список литературы.
         """
-        # # russian
+        # russian
         # text = self.text
         # begin_pattern = r'\\begin\{thebibliography\}.*'
         # m = re.search(begin_pattern, text)
@@ -160,6 +182,9 @@ class Article:
         #         return re.sub(r'\%.*', '', abstract)
 
     def extract_udc(self):
+        """
+        Извлечь УДК.
+        """
         p = r'(?<=УДК\:)\s*(.*)(?=\})'
         m = re.search(p, self.text)
         if m:
@@ -169,6 +194,9 @@ class Article:
             logger.error('Не найден УДК в {}!'.format(self.path))
 
     def extract_msc2010(self):
+        """
+        Извлечь MSC2010.
+        """
         p = r'(?<=MSC2010\:)\s*(.*)(?=\})'
         m = re.search(p, self.text)
         if m:
@@ -178,12 +206,16 @@ class Article:
             logger.error('Не найден MSC2010 в {}!'.format(self.path))
 
     def update_image_path(self):
+        """
+        Обновить пути к файлам изображений.
+        """
         text = self.article_text
         pos = []
         for m in re.finditer(r'\\includegraphics.*?\{(.+?)\}', text):
             graph_text = text[m.start():m.end()]
             m_image_name = re.search(r'{(.*)}', graph_text)
-            pos.append((m.start() + m_image_name.start(), m.start() + m_image_name.end()))
+            pos.append((m.start() + m_image_name.start(),
+                        m.start() + m_image_name.end()))
         d = len(self.path) + 1
         for i, p in enumerate(pos):
             image_name = text[p[0] + i*d+1:p[1] + i*d-1]
@@ -192,11 +224,56 @@ class Article:
                    text[p[1] + i*d:]
         self.article_text = text
 
+    def add_content_lines(self):
+        ru_con = '\\addcontentsline{{toc}}{{art}}' \
+                 '{{\\textbf{{{authors}}} {title}}}'.\
+                 format(authors=', '.join(['{} {} {}'.format(a['family'],
+                                                     a['name'],
+                                                     a['patronymic'])
+                                          for a in self.authors]),
+                        title=self.title['ru'])
+
+        en_con = ''
+        # en_con = '\\addcontentsline{{toc}}{{art}}' \
+        #          '{{\\textbf{{{authors}}}{title}}}'.\
+        #          format(authors=self.authors['en'],
+        #                 title=self.title['en'])
+        return '{}\n{}\n'.format(ru_con, en_con)
+
+    def extract_author_details(self):
+        p = r'\\authorInfo\{.*\}?'
+        self.author_details = []
+        for m in re.finditer(p, self.text):
+            self.author_details.append(self.text[m.start():m.end()])
+
+    def parse(self):
+        self.extract_title()
+        self.extract_authors()
+        self.extract_author_details()
+        self.extract_ru_abstracts()
+        self.extract_en_abstracts()
+        self.extract_udc()
+        self.extract_msc2010()
+        self.extract_sections()
+        self.extract_bibliography()
+
     def compile(self):
+        """
+        Скомпилировать статью.
+            1. Выделить необходимую информацию: заголовки, список авторов,
+               аннотации и т.д.
+            2. Выделить "чистый" текст.
+            2. Добавить служебную информацию.
+        """
+        self.parse()
         m_start = re.search(r'\\markboth', self.text)
         m_end = re.search(r'\\end{thebibliography}', self.text)
         if m_start and m_end:
             self.article_text = self.text[m_start.start():m_end.end()]
+            self.article_text = '\input{__init_counters__}\n' + \
+                                '\input{__to_rus__}\n\n' + \
+                                self.add_content_lines() + \
+                                self.article_text
             article_path = os.path.join(self.path, '__article.tex')
             self.update_image_path()
             with open(article_path, 'wt') as f:
@@ -205,20 +282,10 @@ class Article:
         else:
             raise Exception('Incorrect article {}'.format(self.path))
 
-    def parse(self):
-        self.extract_title()
-        self.extract_authors()
-        self.extract_ru_abstracts()
-        self.extract_en_abstracts()
-        self.extract_udc()
-        self.extract_msc2010()
-        self.extract_sections()
-        self.extract_bibliography()
-
 
 class TvimDocument:
     """
-    Tvim Journal Document Class
+    Объектная модель выпуска журнала.
     """
     def __init__(self, config):
         self.config = config
@@ -228,7 +295,7 @@ class TvimDocument:
         self.number = self.config['tvim']['number']
         self.total_number = self.config['tvim']['total number']
         self.protocol_number = self.config['tvim'].get('protocol number', '???')
-        self.protocol_day = self.config['tvim'].get('protocol number', '???')
+        self.protocol_day = self.config['tvim'].get('protocol day', '???')
         self.protocol_month = self.config['tvim'].get('protocol month', '???')
         self.protocol_monthname = self.config['tvim'].get('protocol month name',
                                                           '???')
@@ -271,7 +338,8 @@ class TvimDocument:
             '\def\protocol{№\,\protocolnumber\ от~\protocolday~'
             '\protocolmonthname~\protocolyear\,г.}\n',
             '\def\sign2print{\protocolday.\protocolmonth.\protocolyear}\n',
-            '\def\print_page_count{{{}}}\n'.format(round(self.page_count * 0.1056), 1),
+            '\def\print_page_count{{{}}}\n'.format(round(self.page_count
+                                                         * 0.1056), 1),
             '\def\\tvimissn{ISSN\;1729-3901}\n',
             '\\newlength{\myparindent}\n',
             '\\newlength{\myinter}\n'
@@ -311,16 +379,23 @@ class TvimDocument:
         articles = [f for f in os.listdir(articles_path)
                     if not f.startswith('.')]
         art_file_content = []
+        author_details = []
+        referats = []
         for art in articles:
             article = Article(path=os.path.join(articles_path, art))
             self.articles.append(article)
-            article.parse()
             art_path = article.compile()
+            author_details.extend(article.author_details)
             if art_path:
                 art_file_content.append(art_path)
             with open('articles.tex', 'wt') as f:
                 f.writelines(['\input{{{}}}\n'.format(art_path)
                               for art_path in art_file_content])
+
+        author_details = sorted(author_details)
+        with open('authors.tex', 'at') as authors_file:
+            authors_file.writelines('\n\n\medskip\n'.join(author_details))
+
 
     def update_article(self, article):
         pass
@@ -347,6 +422,8 @@ class TvimDocument:
             cmd = ['pdflatex', 'tvim_{}_{}.tex'.format(self.year, self.number)]
             res = subprocess.run(cmd)
             if res.returncode == 0:
+                # второй запуск для создания ссылок и содержания
+                subprocess.run(cmd)
                 print("ok")
             else:
                 print("ERROR: something is wrong. Please look at log files.")
