@@ -5,6 +5,9 @@ import os
 import subprocess
 import re
 import logging
+import PyPDF2
+from docx import Document
+import json
 
 
 logger = logging.getLogger('tvim')
@@ -43,6 +46,8 @@ class Article:
         self.bibliography = {}
         self.text = self.get_text()
         self.article_text = None
+        self.authors_en = None
+        self.title_en = None
 
     def get_text(self):
         tex_file = [f for f in os.listdir(self.path)
@@ -86,6 +91,7 @@ class Article:
         Извлечь авторов.
         """
         text = self.text
+        # russian case
         self.authors = []
         for m1 in re.finditer(r'\\author\{(.*)\}', text):
             authors = m1[1]
@@ -108,6 +114,18 @@ class Article:
                                          'patronymic': m['patronymic']})
         if not self.authors:
             logger.error('Не найдены авторы в {}!'.format(self.path))
+
+    def extract_en_title_and_authors(self):
+        # english case
+        text = self.text
+        pattern = r'\\begin{abstractX}{(?P<title>.*?)}{(?P<authors>.*?)}'
+        m = re.search(pattern, text)
+        if m:
+            self.authors_en = m['authors']
+            self.title_en = m['title']
+        else:
+            logger.error('Не найдены авторы (английский вариант) в {}!'.
+                         format(self.path))
 
     def extract_ru_abstracts(self):
         """
@@ -161,25 +179,45 @@ class Article:
                 self.sections.append(self.normalize_text(t[0]))
         if not self.sections:
             logger.error('Не найдены разделы в {}!'.format(self.path))
-        else:
-            print(self.sections)
 
     def extract_bibliography(self):
         """
         Извлечь список литературы.
         """
-        # russian
-        # text = self.text
-        # begin_pattern = r'\\begin\{thebibliography\}.*'
-        # m = re.search(begin_pattern, text)
-        # if m:
-        #     p0 = m.end()
-        #     end_pattern = r'\\end\{thebibliography\}'
-        #     m = re.search(end_pattern, text)
-        #     if m:
-        #         p1 = m.start()
-        #         abstract = text[p0:p1]
-        #         return re.sub(r'\%.*', '', abstract)
+        text = self.text
+
+        m = re.search(r'\\begin{thebibliography}', text)
+        if m:
+            bib_begin_pos = m.start()
+        else:
+            bib_begin_pos = None
+
+        m = re.search(r'\\end{thebibliography}', text)
+        if m:
+            bib_end_pos = m.end()
+        else:
+            bib_end_pos = None
+
+        if not (bib_begin_pos and bib_end_pos):
+            logger.error('There is no the bibliography')
+        else:
+            bib_text = text[bib_begin_pos:bib_end_pos]
+            bib_text = re.sub(r'%\s*(.*)', '', bib_text)
+            bib_text = bib_text.replace('\n', ' ')
+
+            bib_ids = []
+            for m in re.finditer(r'\\bibitem{(?P<bibitem>.*?)}', bib_text):
+                bib_ids.append(m['bibitem'])
+
+            self.bibliography = {}
+            for bid in bib_ids:
+                p = '\\\\bibitem{{{}}}(?P<text>.*?)(?=\\\\bibitem|\\\\end)'.\
+                    format(bid)
+                m = re.search(p, bib_text, re.MULTILINE)
+                if m:
+                    bibtext = m['text']
+
+                    self.bibliography[bid] = bibtext
 
     def extract_udc(self):
         """
@@ -233,11 +271,9 @@ class Article:
                                           for a in self.authors]),
                         title=self.title['ru'])
 
-        en_con = ''
-        # en_con = '\\addcontentsline{{toc}}{{art}}' \
-        #          '{{\\textbf{{{authors}}}{title}}}'.\
-        #          format(authors=self.authors['en'],
-        #                 title=self.title['en'])
+        en_con = '\\addcontentsline{{tec}}{{art}}' \
+                 '{{\\textbf{{{authors}}} {title}}}'.\
+                 format(authors=self.authors_en, title=self.title_en)
         return '{}\n{}\n'.format(ru_con, en_con)
 
     def extract_author_details(self):
@@ -252,6 +288,7 @@ class Article:
         self.extract_author_details()
         self.extract_ru_abstracts()
         self.extract_en_abstracts()
+        self.extract_en_title_and_authors()
         self.extract_udc()
         self.extract_msc2010()
         self.extract_sections()
@@ -281,6 +318,23 @@ class Article:
             return article_path
         else:
             raise Exception('Incorrect article {}'.format(self.path))
+
+    def as_dict(self):
+        return {
+            'title': self.title,
+            'authors': ['{} {} {}'.format(a['family'], a['name'],
+                                          a['patronymic'])
+                        for a in self.authors],
+            'abstracts': {
+                'ru': self.abstracts['ru'],
+                'en': self.abstracts['en']
+            },
+            'УДК': self.udc,
+            'MSC2010': self.msc2010,
+            'sections': self.sections,
+            'text': self.article_text,
+            'bibliography': self.bibliography,
+        }
 
 
 class TvimDocument:
@@ -316,6 +370,8 @@ class TvimDocument:
         with open(path, 'rt') as config_file:
             config = yaml.load(config_file, Loader=yaml.SafeLoader)
         return cls(config)
+
+    art_number = property(lambda self: len(self.articles), None, None)
 
     def _update_params(self):
         """
@@ -396,12 +452,14 @@ class TvimDocument:
         with open('authors.tex', 'at') as authors_file:
             authors_file.writelines('\n\n\medskip\n'.join(author_details))
 
-
-    def update_article(self, article):
-        pass
+    def calc_page_count(self, pdf_path):
+        self.page_count = 0
+        with open(pdf_path, 'rb') as pdf_file:
+            reader = PyPDF2.PdfFileReader(pdf_file)
+            self.page_count = reader.getNumPages()
 
     def compile(self):
-        print('Компиляция ТВИМ {year} #{number}. '
+        print('Компиляция ТВИМ {year} №{number}. '
               'Пожалуйста подождите'.format(year=self.year,
                                             number=self.number))
         # задаем корневую папку и копируем необходимые файлы
@@ -412,7 +470,7 @@ class TvimDocument:
         shutil.copytree(self.config['path']['articles'],
                         os.path.join(self.root_path, 'articles'))
 
-        cur_dir = os.path.curdir
+        cur_dir = os.path.abspath(os.path.curdir)
         try:
             os.chdir(self.root_path)
             main_filename = 'tvim_{}_{}.tex'.format(self.year, self.number)
@@ -422,13 +480,163 @@ class TvimDocument:
             cmd = ['pdflatex', 'tvim_{}_{}.tex'.format(self.year, self.number)]
             res = subprocess.run(cmd)
             if res.returncode == 0:
+                self.calc_page_count('tvim_{}_{}.pdf'.format(self.year,
+                                                             self.number))
+                self._update_params()
                 # второй запуск для создания ссылок и содержания
                 subprocess.run(cmd)
-                print("ok")
+                print('ТВИМ {} {} успешно собран'.format(self.year,
+                                                         self.number))
+                with open('tvim_{}_{}.json'.format(self.year, self.number),
+                          'wt') as json_file:
+                    json.dump(self.as_dict(), json_file, indent=4,
+                              sort_keys=False, ensure_ascii=False)
             else:
-                print("ERROR: something is wrong. Please look at log files.")
+                print('ОШИБКА: что-то пошло не так. '
+                      'Посмотрите, пожалуйста, лог файл.')
         finally:
             os.chdir(cur_dir)
+
+    def as_dict(self):
+        return {
+            'year': self.year,
+            'number': self.number,
+            'articles': [a.as_dict() for a in self.articles]
+        }
+
+
+class ReportGenerator:
+
+    def __init__(self, tvim_doc: TvimDocument, config):
+        self.config = config
+        self.path = config['path']['docs']
+        self.tvim_doc = tvim_doc
+
+    @classmethod
+    def from_config(cls, tvim_doc: TvimDocument, path):
+        """
+        Parameters
+        ----------
+            tvim_doc: TvimDocument
+                Объектная модель журнала
+            path: str
+                Путь к конфигурационному файлу
+        """
+        with open(path, 'rt') as config_file:
+            config = yaml.load(config_file, Loader=yaml.SafeLoader)
+        return cls(tvim_doc, config)
+
+    def build_05_predstavlen(self):
+        doc = Document(os.path.join(self.path, '05predstavlen.docx'))
+
+        last_digit = self.tvim_doc.art_number % 10
+        if last_digit == 1:
+            art_word = 'статья'
+        elif last_digit in [2, 3, 4]:
+            art_word = 'статьи'
+        else:
+            art_word = 'статей'
+
+        new_text = '«Таврический вестник информатики и математики», ' \
+                   '{year}, №{number}, {nart} {art_word}, ' \
+                   '{pagenum} страниц'.format(year=self.tvim_doc.year,
+                                              number=self.tvim_doc.number,
+                                              nart=self.tvim_doc.art_number,
+                                              pagenum=self.tvim_doc.page_count,
+                                              art_word=art_word)
+
+        p = doc.paragraphs[8]
+        p.text = ''
+        run = p.add_run(new_text + '.')
+        run.bold = True
+        run.underline = True
+        p.paragraph_format.line_spacing = 1.5
+
+        p = doc.paragraphs[21]
+        p.text = ''
+        run = p.add_run(new_text)
+        run.bold = True
+        run.underline = True
+        new_text_1 = ' научно-технический совет пришёл к заключению, '\
+                     'что представленный выпуск научного журнала (сборника) '\
+                     'рекомендован к изданию.'
+        run = p.add_run(new_text_1)
+        run.bold = True
+        p.paragraph_format.line_spacing = 1.5
+        p.paragraph_format.alignment = 3
+
+        doc.save(os.path.join(self.path, '05predstavlen.docx'))
+
+    def build_06zayavlenie(self):
+        doc = Document(os.path.join(self.path, '06zayavlenie.docx'))
+
+        p = doc.paragraphs[9]
+        p.text = 'Наименование: '
+        run = p.add_run('Таврический вестник информатики и математики, '
+                        '{}, №{}'.format(self.tvim_doc.year,
+                                         self.tvim_doc.number))
+        run.bold = True
+        run.underline = True
+
+        doc.save(os.path.join(self.path, '06zayavlenie.docx'))
+
+    def build_expertiza(self):
+        doc = Document(os.path.join(self.path,
+                                    'Приложение1_Экспертиза публикации.docx'))
+
+        for p_index in [14, 22]:
+            p = doc.paragraphs[p_index]
+            p.text = ''
+            run = p.add_run(
+                'научный журнал «Таврический вестник информатики и математики», '
+                '{}, №{}'.format(self.tvim_doc.year, self.tvim_doc.number))
+            run.bold = True
+
+        doc.save(os.path.join(self.path,
+                              'Приложение1_Экспертиза публикации.docx'))
+
+    def build_export_doc(self):
+        doc = Document(os.path.join(self.path, 'Экспортное заключение.docx'))
+
+        p = doc.paragraphs[14]
+        p.text = ''
+        p.add_run('Внутривузовская комиссия экспортного контроля рассмотрев ')
+        run = p.add_run(
+            'научный журнал «Таврический вестник информатики и математики», '
+            '{}, №{} '.format(self.tvim_doc.year, self.tvim_doc.number))
+        run.bold = True
+        p.add_run('подтверждает, что в материале, включающем результаты '
+                  'научно-исследовательских, опытно-конструкторских и '
+                  'технологических работ, финансируемых государством, '
+                  'не содержатся сведения, подпадающие под действие списков '
+                  'контролируемых товаров и технологий, и они не могут быть '
+                  'использованы для целей создания оружия массового поражения, '
+                  'средств его доставки, иных видов вооружения и военной '
+                  'техники либо для подготовки и (или) совершения '
+                  'террористических актов.')
+
+        p = doc.paragraphs[16]
+        p.text = 'Заключение: '
+        run = p.add_run('для открытого опубликования подготовленных '
+                        'материалов ')
+        run.italic = True
+        run = p.add_run(
+            'научный журнал «Таврический вестник информатики и математики», '
+            '{}, №{} '.format(self.tvim_doc.year, self.tvim_doc.number))
+        run.bold = True
+        run.italic = True
+        run = p.add_run('оформление лицензии ФСТЭК России или разрешения '
+                        'Комиссии по экспортному контролю '
+                        'Российской Федерации не требуется.')
+        run.italic = True
+
+        doc.save(os.path.join(self.path, 'Экспортное заключение.docx'))
+
+    def build(self):
+        self.build_05_predstavlen()
+        self.build_06zayavlenie()
+        self.build_expertiza()
+        self.build_export_doc()
 
 
 if __name__ == '__main__':
@@ -440,4 +648,6 @@ if __name__ == '__main__':
 
     tvim = TvimDocument.from_config(args.config)
     tvim.compile()
+    rep_gen = ReportGenerator.from_config(tvim, args.config)
+    rep_gen.build()
 

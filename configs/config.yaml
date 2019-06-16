@@ -3,7 +3,11 @@ tvim:
     number: 2
     total number: 43
     protocol number: 2
+    protocol day: 2
+    protocol month: 2
+    protocol year: 2009
 path:
     articles: ../articles_2019_2
     resources: resources
+    docs: docs
     output: output
