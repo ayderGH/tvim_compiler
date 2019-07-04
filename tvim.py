@@ -70,18 +70,26 @@ class Article:
         text = re.sub(r'\s{2,}', ' ', text)
         return text.strip()
 
+    @staticmethod
+    def select_tag(tag, text, default=None):
+        m = re.search(tag + r'{.*?}+', text, flags=re.DOTALL)
+        if m:
+            t = text[m.start() + len(tag):m.end() - 1]
+            t = re.sub(r'\n', ' ', t, flags=re.DOTALL)
+            t = re.sub(r' {2,}', ' ', t, flags=re.DOTALL)
+            return t
+        else:
+            return default
+
     def extract_title(self):
         """
         Извлечь заголовок.
         """
         text = self.text
         self.title = {}
-        title_pattern = r'\\title\{(?P<title>.*)\}'
-        m = re.search(title_pattern, text)
-        if m:
-            title = m['title']
-            # удалить, если имеется, 'footnote'
-            title = re.sub(r'\\footnote\{.*\}', '', title)
+        title = self.select_tag(r'\\title', text)
+        if title:
+            title = self.select_tag(r'\\uppercase', title, title)
             self.title['ru'] = title
         else:
             logger.error('Не найден заголовок в {}!'.format(self.path))
@@ -119,7 +127,7 @@ class Article:
         # english case
         text = self.text
         pattern = r'\\begin{abstractX}{(?P<title>.*?)}{(?P<authors>.*?)}'
-        m = re.search(pattern, text)
+        m = re.search(pattern, text, flags=re.DOTALL)
         if m:
             self.authors_en = m['authors']
             self.title_en = m['title']
@@ -263,13 +271,16 @@ class Article:
         self.article_text = text
 
     def add_content_lines(self):
+        title = self.title['ru']
+        title = re.sub(r'\\footnote{.*?}', '', title)
         ru_con = '\\addcontentsline{{toc}}{{art}}' \
                  '{{\\textbf{{{authors}}} {title}}}'.\
-                 format(authors=', '.join(['{} {} {}'.format(a['family'],
-                                                     a['name'],
-                                                     a['patronymic'])
-                                          for a in self.authors]),
-                        title=self.title['ru'])
+                 format(
+                    authors=', '.join(
+                        ['{}\\;{}\\;{}'.format(a['family'], a['name'],
+                                               a['patronymic'])
+                         for a in self.authors]),
+                    title=title)
 
         en_con = '\\addcontentsline{{tec}}{{art}}' \
                  '{{\\textbf{{{authors}}} {title}}}'.\
@@ -277,9 +288,9 @@ class Article:
         return '{}\n{}\n'.format(ru_con, en_con)
 
     def extract_author_details(self):
-        p = r'\\authorInfo\{.*\}?'
+        p = r'\\authorInfo\{.*?\}\n{2,}'
         self.author_details = []
-        for m in re.finditer(p, self.text):
+        for m in re.finditer(p, self.text, flags=re.DOTALL):
             self.author_details.append(self.text[m.start():m.end()])
 
     def parse(self):
@@ -293,6 +304,27 @@ class Article:
         self.extract_msc2010()
         self.extract_sections()
         self.extract_bibliography()
+
+    def update_title(self):
+        # find \footnote
+        p = self.title['ru'].find(r'\footnote')
+        if p >= 0:
+            main_title = self.title['ru'][:p]
+            footnote = self.title['ru'][p:]
+            upper_title = '{}{}'.format(main_title.upper(), footnote)
+        else:
+            upper_title = self.title['ru'].upper()
+
+        if self.title['ru']:
+            m = re.search(r'\\title{.*?}+', self.article_text, flags=re.DOTALL)
+            if m:
+                self.article_text = re.sub(
+                    r'\\title{.*?}+', '', self.article_text, flags=re.DOTALL)
+                self.article_text = self.article_text[:m.start()] \
+                    + '\\title{{{}}}'.format(upper_title) \
+                    + self.article_text[m.start():]
+            with open('/Users/ayder/Desktop/out.tex', 'wt') as f:
+                f.write(self.article_text)
 
     def compile(self):
         """
@@ -311,6 +343,7 @@ class Article:
                                 '\input{__to_rus__}\n\n' + \
                                 self.add_content_lines() + \
                                 self.article_text
+            self.update_title()
             article_path = os.path.join(self.path, '__article.tex')
             self.update_image_path()
             with open(article_path, 'wt') as f:
@@ -433,7 +466,7 @@ class TvimDocument:
     def _build(self):
         articles_path = os.path.join('articles')
         articles = [f for f in os.listdir(articles_path)
-                    if not f.startswith('.')]
+                    if not f.startswith('.') and not f.startswith('-')]
         art_file_content = []
         author_details = []
         referats = []
