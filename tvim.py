@@ -8,6 +8,7 @@ import logging
 import PyPDF2
 from docx import Document
 import json
+from transliterate import translit
 
 
 logger = logging.getLogger('tvim')
@@ -48,6 +49,14 @@ class Article:
         self.article_text = None
         self.authors_en = None
         self.title_en = None
+
+    @property
+    def id(self):
+        s = self.authors_str
+        s = s.replace('\\;', '_')
+        s = re.sub(' +', '_', s)
+        s = re.sub(r'[\.,]', '', s)
+        return translit(s, reversed=True)
 
     def get_text(self):
         tex_file = [f for f in os.listdir(self.path)
@@ -270,16 +279,19 @@ class Article:
                    text[p[1] + i*d:]
         self.article_text = text
 
+    @property
+    def authors_str(self):
+        return ', '.join(['{}\\;{}\\;{}'.format(a['family'], a['name'],
+                                                a['patronymic'])
+                          for a in self.authors])
+
     def add_content_lines(self):
         title = self.title['ru']
         title = re.sub(r'\\footnote{.*?}', '', title)
         ru_con = '\\addcontentsline{{toc}}{{art}}' \
                  '{{\\textbf{{{authors}}} {title}}}'.\
                  format(
-                    authors=', '.join(
-                        ['{}\\;{}\\;{}'.format(a['family'], a['name'],
-                                               a['patronymic'])
-                         for a in self.authors]),
+                    authors=self.authors_str,
                     title=title)
 
         en_con = '\\addcontentsline{{tec}}{{art}}' \
@@ -326,6 +338,8 @@ class Article:
             with open('/Users/ayder/Desktop/out.tex', 'wt') as f:
                 f.write(self.article_text)
 
+    art_path = property(lambda self: os.path.join(self.path, '__article.tex'))
+
     def compile(self):
         """
         Скомпилировать статью.
@@ -339,16 +353,17 @@ class Article:
         m_end = re.search(r'\\end{thebibliography}', self.text)
         if m_start and m_end:
             self.article_text = self.text[m_start.start():m_end.end()]
-            self.article_text = '\input{__init_counters__}\n' + \
-                                '\input{__to_rus__}\n\n' + \
-                                self.add_content_lines() + \
-                                self.article_text
+            self.article_text = \
+                '\input{__init_counters__}\n' + \
+                '\input{__to_rus__}\n\n' + \
+                self.add_content_lines() + \
+                f'\label{{{self.id}_begin}}\n\n' + \
+                self.article_text + \
+                f'\n\n\label{{{self.id}_end}}'
             self.update_title()
-            article_path = os.path.join(self.path, '__article.tex')
             self.update_image_path()
-            with open(article_path, 'wt') as f:
+            with open(self.art_path, 'wt') as f:
                 f.write(self.article_text)
-            return article_path
         else:
             raise Exception('Incorrect article {}'.format(self.path))
 
@@ -467,19 +482,24 @@ class TvimDocument:
         articles_path = os.path.join('articles')
         articles = [f for f in os.listdir(articles_path)
                     if not f.startswith('.') and not f.startswith('-')]
-        art_file_content = []
+
         author_details = []
         referats = []
         for art in articles:
             article = Article(path=os.path.join(articles_path, art))
             self.articles.append(article)
-            art_path = article.compile()
-            author_details.extend(article.author_details)
-            if art_path:
-                art_file_content.append(art_path)
-            with open('articles.tex', 'wt') as f:
-                f.writelines(['\input{{{}}}\n'.format(art_path)
-                              for art_path in art_file_content])
+            article.compile()
+
+        self.articles = sorted(self.articles, key=lambda a: a.authors_str)
+
+        art_file_content = []
+        for art in self.articles:
+            author_details.extend(art.author_details)
+            if art.art_path:
+                art_file_content.append(art.art_path)
+        with open('articles.tex', 'wt') as f:
+            f.writelines(['\input{{{}}}\n'.format(art_path)
+                          for art_path in art_file_content])
 
         author_details = sorted(author_details)
         with open('authors.tex', 'at') as authors_file:
@@ -510,14 +530,15 @@ class TvimDocument:
             os.rename('tvim_main.tex', main_filename)
             self._update_params()
             self._build()
-            cmd = ['pdflatex', 'tvim_{}_{}.tex'.format(self.year, self.number)]
-            res = subprocess.run(cmd)
+            cmd = ['pdflatex', '-halt-on-error', '-file-line-error',
+                   'tvim_{}_{}.tex'.format(self.year, self.number)]
+            res = subprocess.run(cmd, stdout=subprocess.PIPE)
             if res.returncode == 0:
                 self.calc_page_count('tvim_{}_{}.pdf'.format(self.year,
                                                              self.number))
                 self._update_params()
                 # второй запуск для создания ссылок и содержания
-                subprocess.run(cmd)
+                subprocess.run(cmd, stdout=subprocess.PIPE)
                 print('ТВИМ {} {} успешно собран'.format(self.year,
                                                          self.number))
                 with open('tvim_{}_{}.json'.format(self.year, self.number),
