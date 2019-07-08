@@ -49,6 +49,7 @@ class Article:
         self.article_text = None
         self.authors_en = None
         self.title_en = None
+        self.keywords = {}
 
     @property
     def id(self):
@@ -150,16 +151,12 @@ class Article:
         """
         text = self.text
         self.abstracts['ru'] = ''
-        begin_pattern = r'\\begin\{abstractXr\}.*'
-        m = re.search(begin_pattern, text)
+        m = re.search(r'\\begin{abstractXr}\n*'
+                      r'{(.*?)}\n*{(.*?)}\n*(.*?)\n*'
+                      r'\\end{abstractXr}',
+                      text, flags=re.DOTALL)
         if m:
-            p0 = m.end()
-            end_pattern = r'\\end\{abstractXr\}'
-            m = re.search(end_pattern, text)
-            if m:
-                p1 = m.start()
-                abstract = text[p0:p1]
-                self.abstracts['ru'] = abstract
+            self.abstracts['ru'] = m[3]
         if not self.abstracts['ru']:
             logger.error('Не найдена русская аннотация в {}!'.format(self.path))
 
@@ -182,6 +179,22 @@ class Article:
         if not self.abstracts['en']:
             logger.error('Не найдена английская аннотация в {}!'.
                          format(self.path))
+
+    def extract_keywords(self):
+        self.keywords = {'ru': '', 'en': ''}
+        m = re.search(r'\\keywordsr{(.*?)}+', self.text, flags=re.DOTALL)
+        if m:
+            self.keywords['ru'] = m[1]
+        else:
+            logger.warning("Не найдены ключевые слова "
+                           "на русском языке в {}".format(self.path))
+
+        m = re.search(r'\\keywords{(.*?)}+', self.text, flags=re.DOTALL)
+        if m:
+            self.keywords['en'] = m[1]
+        else:
+            logger.warning("Не найдены ключевые слова "
+                           "на английском языке в {}".format(self.path))
 
     def extract_sections(self):
         """
@@ -285,6 +298,21 @@ class Article:
                                                 a['patronymic'])
                           for a in self.authors])
 
+    @property
+    def authors_str_reverse(self):
+        return ', '.join(['{}.\\;{}.\\;{}'.format(a['name'][0],
+                                                  a['patronymic'][0],
+                                                  a['family'])
+                          for a in self.authors])
+
+    @property
+    def begin_label(self):
+        return f'{self.id}_begin'
+
+    @property
+    def end_label(self):
+        return f'{self.id}_end'
+
     def add_content_lines(self):
         title = self.title['ru']
         title = re.sub(r'\\footnote{.*?}', '', title)
@@ -311,6 +339,7 @@ class Article:
         self.extract_author_details()
         self.extract_ru_abstracts()
         self.extract_en_abstracts()
+        self.extract_keywords()
         self.extract_en_title_and_authors()
         self.extract_udc()
         self.extract_msc2010()
@@ -340,6 +369,16 @@ class Article:
 
     art_path = property(lambda self: os.path.join(self.path, '__article.tex'))
 
+    def remove_russian_abstract(self):
+        pattern = r'\\begin{abstractXr}\n*' \
+                  r'{(.*?)}\n*{(.*?)}\n*(.*?)\n*' \
+                  r'\\end{abstractXr}'
+        self.article_text = re.sub(pattern, '\n', self.article_text,
+                                   flags=re.DOTALL)
+        pattern = r'\\keywordsr{(.*?)}+'
+        self.article_text = re.sub(pattern, '\n', self.article_text,
+                                   flags=re.DOTALL)
+
     def compile(self):
         """
         Скомпилировать статью.
@@ -353,13 +392,14 @@ class Article:
         m_end = re.search(r'\\end{thebibliography}', self.text)
         if m_start and m_end:
             self.article_text = self.text[m_start.start():m_end.end()]
+            self.remove_russian_abstract()
             self.article_text = \
-                '\input{__init_counters__}\n' + \
-                '\input{__to_rus__}\n\n' + \
+                r'\input{__init_counters__}' + '\n' + \
+                r'\input{__to_rus__}' + '\n\n' + \
                 self.add_content_lines() + \
-                f'\label{{{self.id}_begin}}\n\n' + \
-                self.article_text + \
-                f'\n\n\label{{{self.id}_end}}'
+                fr'\label{{{self.begin_label}}}' + '\n\n' + \
+                self.article_text + '\n\n' + \
+                fr'\label{{{self.end_label}}}'
             self.update_title()
             self.update_image_path()
             with open(self.art_path, 'wt') as f:
@@ -478,13 +518,34 @@ class TvimDocument:
         with open('__params_en__.tex', 'wt') as f:
             f.writelines(params)
 
+    @staticmethod
+    def _get_referat(article, horzline=True):
+        template = '\\tvimRef{{{authors_fio}}}\n' \
+                   '{{{authors_iof}}}\n' \
+                   '{{{title}}}\n' \
+                   '{{{begin_label}}}\n' \
+                   '{{{end_label}}}\n' \
+                   '{{{udc}}}\n' \
+                   '{{{abstract_ru}}}\n' \
+                   '{{{keywords_ru}}}\n'
+        if horzline:
+            template += '\\abstractLine{{0.5cm}}{{0.7cm}}\n\n'
+
+        return template.format(authors_fio=article.authors_str,
+                               authors_iof=article.authors_str_reverse,
+                               title=article.title['ru'],
+                               begin_label=article.begin_label,
+                               end_label=article.end_label,
+                               udc=article.udc,
+                               abstract_ru=article.abstracts['ru'],
+                               keywords_ru=article.keywords['ru'])
+
     def _build(self):
         articles_path = os.path.join('articles')
         articles = [f for f in os.listdir(articles_path)
                     if not f.startswith('.') and not f.startswith('-')]
 
         author_details = []
-        referats = []
         for art in articles:
             article = Article(path=os.path.join(articles_path, art))
             self.articles.append(article)
@@ -493,17 +554,24 @@ class TvimDocument:
         self.articles = sorted(self.articles, key=lambda a: a.authors_str)
 
         art_file_content = []
-        for art in self.articles:
+        referats = []
+        narticles = len(self.articles)
+        for i, art in enumerate(self.articles):
             author_details.extend(art.author_details)
             if art.art_path:
                 art_file_content.append(art.art_path)
+                referats.append(self._get_referat(art, i < narticles - 1))
+
         with open('articles.tex', 'wt') as f:
-            f.writelines(['\input{{{}}}\n'.format(art_path)
+            f.writelines([r'\input{{{}}}''\n'.format(art_path)
                           for art_path in art_file_content])
 
         author_details = sorted(author_details)
         with open('authors.tex', 'at') as authors_file:
-            authors_file.writelines('\n\n\medskip\n'.join(author_details))
+            authors_file.writelines('\n\n'r'\medskip''\n'.join(author_details))
+
+        with open('referats.tex', 'at') as referats_file:
+            referats_file.writelines('\n\n'.join(referats))
 
     def calc_page_count(self, pdf_path):
         self.page_count = 0
@@ -563,8 +631,9 @@ class ReportGenerator:
 
     def __init__(self, tvim_doc: TvimDocument, config):
         self.config = config
-        self.path = config['path']['docs']
+        self.template_path = config['path']['docs']
         self.tvim_doc = tvim_doc
+        self.root_path = os.path.join(self.tvim_doc.root_path, 'docs')
 
     @classmethod
     def from_config(cls, tvim_doc: TvimDocument, path):
@@ -581,23 +650,28 @@ class ReportGenerator:
         return cls(tvim_doc, config)
 
     def build_05_predstavlen(self):
-        doc = Document(os.path.join(self.path, '05predstavlen.docx'))
+        doc = Document(os.path.join(self.root_path, '05predstavlen.docx'))
 
         last_digit = self.tvim_doc.art_number % 10
         if last_digit == 1:
             art_word = 'статья'
+            pages_word = 'страница'
         elif last_digit in [2, 3, 4]:
             art_word = 'статьи'
+            pages_word = 'страницы'
         else:
             art_word = 'статей'
+            pages_word = 'страниц'
 
         new_text = '«Таврический вестник информатики и математики», ' \
                    '{year}, №{number}, {nart} {art_word}, ' \
-                   '{pagenum} страниц'.format(year=self.tvim_doc.year,
-                                              number=self.tvim_doc.number,
-                                              nart=self.tvim_doc.art_number,
-                                              pagenum=self.tvim_doc.page_count,
-                                              art_word=art_word)
+                   '{pagenum} {pages_word}'.format(
+                        year=self.tvim_doc.year,
+                        number=self.tvim_doc.number,
+                        nart=self.tvim_doc.art_number,
+                        art_word=art_word,
+                        pagenum=self.tvim_doc.page_count,
+                        pages_word=pages_word)
 
         p = doc.paragraphs[8]
         p.text = ''
@@ -619,10 +693,10 @@ class ReportGenerator:
         p.paragraph_format.line_spacing = 1.5
         p.paragraph_format.alignment = 3
 
-        doc.save(os.path.join(self.path, '05predstavlen.docx'))
+        doc.save(os.path.join(self.root_path, '05predstavlen.docx'))
 
     def build_06zayavlenie(self):
-        doc = Document(os.path.join(self.path, '06zayavlenie.docx'))
+        doc = Document(os.path.join(self.root_path, '06zayavlenie.docx'))
 
         p = doc.paragraphs[9]
         p.text = 'Наименование: '
@@ -632,10 +706,10 @@ class ReportGenerator:
         run.bold = True
         run.underline = True
 
-        doc.save(os.path.join(self.path, '06zayavlenie.docx'))
+        doc.save(os.path.join(self.template_path, '06zayavlenie.docx'))
 
     def build_expertiza(self):
-        doc = Document(os.path.join(self.path,
+        doc = Document(os.path.join(self.template_path,
                                     'Приложение1_Экспертиза публикации.docx'))
 
         for p_index in [14, 22]:
@@ -646,11 +720,11 @@ class ReportGenerator:
                 '{}, №{}'.format(self.tvim_doc.year, self.tvim_doc.number))
             run.bold = True
 
-        doc.save(os.path.join(self.path,
+        doc.save(os.path.join(self.root_path,
                               'Приложение1_Экспертиза публикации.docx'))
 
     def build_export_doc(self):
-        doc = Document(os.path.join(self.path, 'Экспортное заключение.docx'))
+        doc = Document(os.path.join(self.root_path, 'Экспортное заключение.docx'))
 
         p = doc.paragraphs[14]
         p.text = ''
@@ -684,9 +758,12 @@ class ReportGenerator:
                         'Российской Федерации не требуется.')
         run.italic = True
 
-        doc.save(os.path.join(self.path, 'Экспортное заключение.docx'))
+        doc.save(os.path.join(self.root_path, 'Экспортное заключение.docx'))
 
     def build(self):
+        if os.path.exists(self.root_path):
+            shutil.rmtree(self.root_path)
+        shutil.copytree(self.template_path, self.root_path)
         self.build_05_predstavlen()
         self.build_06zayavlenie()
         self.build_expertiza()
