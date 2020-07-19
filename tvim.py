@@ -31,12 +31,44 @@ def get_text_between_braces(text, open_pos=0):
         i += 1
 
 
-class Article:
+class ArticleBase:
+
+    def __init__(self, path):
+        self._path = path
+        self.text = self.get_text()
+        self.article_text = ''
+
+    path = property(lambda self: self._path)
+    art_path = property(lambda self: os.path.join(self.path, '__article.tex'))
+
+    def compile(self):
+        pass
+
+    def get_text(self):
+        tex_file = [f for f in os.listdir(self.path) if f.endswith('.tex')]
+        if tex_file:
+            tex_file = os.path.join(self.path, tex_file[0])
+            with open(tex_file, 'rt') as f:
+                text = f.read()
+            return text
+
+
+class VerbatimArticle(ArticleBase):
+
+    def compile(self):
+        self.article_text = \
+            r'\newpage' + '\n' \
+            + self.text
+        with open(self.art_path, 'wt') as f:
+            f.write(self.article_text)
+
+
+class Article(ArticleBase):
     """
     Объектная модель статьи журнала.
     """
     def __init__(self, path):
-        self.path = path
+        super().__init__(path)
         self.title = {}
         self.authors = {}
         self.author_details = []
@@ -45,7 +77,6 @@ class Article:
         self.abstracts = {}
         self.sections = {}
         self.bibliography = {}
-        self.text = self.get_text()
         self.article_text = None
         self.authors_en = None
         self.title_en = None
@@ -56,17 +87,11 @@ class Article:
         s = self.authors_str
         s = s.replace('\\;', '_')
         s = re.sub(' +', '_', s)
-        s = re.sub(r'[\.,]', '', s)
-        return translit(s, reversed=True)
-
-    def get_text(self):
-        tex_file = [f for f in os.listdir(self.path)
-                    if f.endswith('.tex')]
-        if tex_file:
-            tex_file = os.path.join(self.path, tex_file[0])
-            with open(tex_file, 'rt') as f:
-                text = f.read()
-        return text
+        s = re.sub(r'[.,]', '', s)
+        try:
+            return translit(s, reversed=True)
+        except Exception as e:
+            return s
 
     @staticmethod
     def normalize_text(text):
@@ -76,7 +101,7 @@ class Article:
             textit
         """
         text = re.sub(r'\\textbf|\\textit|\\it|\\bf', '', text)
-        text = re.sub(r'[\{|\}]', '', text)
+        text = re.sub(r'[{|}]', '', text)
         text = re.sub(r'\s{2,}', ' ', text)
         return text.strip()
 
@@ -111,7 +136,7 @@ class Article:
         text = self.text
         # russian case
         self.authors = []
-        for m1 in re.finditer(r'\\author\{(.*)\}', text):
+        for m1 in re.finditer(r'\\author{(.*)}', text):
             authors = m1[1]
             authors = re.sub(r'\\[;,.:]+', ' ', authors)
             authors = re.sub(r'\s{2,}', ' ', authors)
@@ -279,7 +304,7 @@ class Article:
         """
         text = self.article_text
         pos = []
-        for m in re.finditer(r'\\includegraphics.*?\{(.+?)\}', text):
+        for m in re.finditer(r'\\includegraphics.*?{(.+?)}', text):
             graph_text = text[m.start():m.end()]
             m_image_name = re.search(r'{(.*)}', graph_text)
             pos.append((m.start() + m_image_name.start(),
@@ -288,8 +313,8 @@ class Article:
         for i, p in enumerate(pos):
             image_name = text[p[0] + i*d+1:p[1] + i*d-1]
             text = text[:p[0] + i*d] + \
-                   '{{{}/{}}}'.format(self.path, image_name) + \
-                   text[p[1] + i*d:]
+                '{{{}/{}}}'.format(self.path, image_name) + \
+                text[p[1] + i*d:]
         self.article_text = text
 
     @property
@@ -432,6 +457,7 @@ class TvimDocument:
     def __init__(self, config):
         self.config = config
         self.articles = []
+        self.verbatim_articles = []
         # parameters
         self.year = self.config['tvim']['year']
         self.number = self.config['tvim']['number']
@@ -468,52 +494,53 @@ class TvimDocument:
         """
         # обновление параметров на русском языке
         params = [
-            '\def\\tvimname{Таврический вестник информатики и математики}\n',
-            '\def\\tvimnumber{{№\,{number}\,({total_number})}}\n'.format(
+            r'\def\tvimname{Таврический вестник информатики и математики}''\n',
+            r'\def\tvimnumber{{№\,{number}\,({total_number})}}''\n'.format(
                 number=self.number, total_number=self.total_number),
-            '\def\\tvimyear{{{year}}}\n'.format(year=self.year),
-            '\def\\tvimemail{article@tvim{.}info}\n',
-            '\def\\tvimwww{www{.}tvim{.}info}\n',
-            '\def\protocolnumber{{{}}}'.format(self.protocol_number),
-            '\def\protocolday{{{}}}\n'.format(self.protocol_day),
-            '\def\protocolmonthname{{{}}}\n'.format(self.protocol_monthname),
-            '\def\protocolmonth{{{}}}\n'.format(self.protocol_month),
-            '\def\protocolyear{{{}}}\n'.format(self.protocol_year),
-            '\def\protocol{№\,\protocolnumber\ от~\protocolday~'
-            '\protocolmonthname~\protocolyear\,г.}\n',
-            '\def\sign2print{\protocolday.\protocolmonth.\protocolyear}\n',
-            '\def\print_page_count{{{}}}\n'.format(round(self.page_count
-                                                         * 0.1056), 1),
-            '\def\\tvimissn{ISSN\;1729-3901}\n',
-            '\\newlength{\myparindent}\n',
-            '\\newlength{\myinter}\n'
-            ]
+            r'\def\tvimyear{{{year}}}''\n'.format(year=self.year),
+            r'\def\tvimemail{article@tvim{.}info}''\n',
+            r'\def\tvimwww{www{.}tvim{.}info}''\n',
+            r'\def\protocolnumber{{{}}}'.format(self.protocol_number),
+            r'\def\protocolday{{{}}}''\n'.format(self.protocol_day),
+            r'\def\protocolmonthname{{{}}}''\n'.format(self.protocol_monthname),
+            r'\def\protocolmonth{{{}}}''\n'.format(self.protocol_month),
+            r'\def\protocolyear{{{}}}''\n'.format(self.protocol_year),
+            r'\def\protocol{№\,\protocolnumber\ от~\protocolday~'
+            r'\protocolmonthname~\protocolyear\,г.}''\n',
+            r'\def\sign2print{\protocolday.\protocolmonth.\protocolyear}''\n',
+            r'\def\print_page_count{{{}}}''\n'.format(
+                round(self.page_count * 0.1056), 1),
+            r'\def\tvimissn{ISSN\;1729-3901}''\n',
+            r'\newlength{\myparindent}''\n',
+            r'\newlength{\myinter}''\n'
+        ]
 
         with open('__params__.tex', 'wt') as f:
             f.writelines(params)
 
         # обновление параметров на английском языке
         params = [
-            '\def\\tvimnameen{Taurida Journal of~Computer Science Theory and~Mathematics}\n',
-            '\def\\tvimnumberen{{{}}}\n'.format(self.number),
-            '\def\\tvimnumberwithtotalen{{No.\;{}\;({})}}\n'.format(
+            r'\def\tvimnameen{Taurida Journal of~Computer Science Theory '
+            r'and~Mathematics}''\n',
+            r'\def\tvimnumberen{{{}}}''\n'.format(self.number),
+            r'\def\tvimnumberwithtotalen{{No.\;{}\;({})}}''\n'.format(
                 self.number, self.total_number),
-            '\def\\tvimyearen{{{}}}\n'.format(self.year),
-            '\def\\tvimemailen{article@tvim{.}info}\n',
-            '\def\\tvimwwwen{www{.}tvim{.}info}\n',
-            '\def\protocolen{{No.\,? from {}/{}/{}.}}\n'.format(
+            r'\def\tvimyearen{{{}}}''\n'.format(self.year),
+            r'\def\tvimemailen{article@tvim{.}info}''\n',
+            r'\def\tvimwwwen{www{.}tvim{.}info}''\n',
+            r'\def\protocolen{{No.\,? from {}/{}/{}.}}''\n'.format(
                 self.protocol_month, self.protocol_day, self.protocol_year),
-            '\def\Profen{Professor}\n',
-            '\def\Docenten{Associate professor}\n',
-            '\def\Dfmnen{Doctor of Physico-Mathematical Sciences}\n',
-            '\def\Dtnen{Doctor of Engineering Sciences}\n',
-            '\def\Kfmnen{Candidate of Physico-Mathematical Sciences}\n',
-            '\def\profen{professor}\n',
-            '\def\docenten{associate professor}\n',
-            '\def\dfmnen{doctor of Physico-Mathematical Sciences}\n',
-            '\def\dtnen{doctor of Engineering Sciences}\n',
-            '\def\kfmnen{candidate of Physico-Mathematical Sciences}\n',
-            ]
+            r'\def\Profen{Professor}''\n',
+            r'\def\Docenten{Associate professor}''\n',
+            r'\def\Dfmnen{Doctor of Physico-Mathematical Sciences}''\n',
+            r'\def\Dtnen{Doctor of Engineering Sciences}''\n',
+            r'\def\Kfmnen{Candidate of Physico-Mathematical Sciences}''\n',
+            r'\def\profen{professor}''\n',
+            r'\def\docenten{associate professor}''\n',
+            r'\def\dfmnen{doctor of Physico-Mathematical Sciences}''\n',
+            r'\def\dtnen{doctor of Engineering Sciences}''\n',
+            r'\def\kfmnen{candidate of Physico-Mathematical Sciences}''\n',
+        ]
 
         with open('__params_en__.tex', 'wt') as f:
             f.writelines(params)
@@ -542,13 +569,23 @@ class TvimDocument:
 
     def _build(self):
         articles_path = os.path.join('articles')
-        articles = [f for f in os.listdir(articles_path)
-                    if not f.startswith('.') and not f.startswith('-')]
+        articles = [
+            f for f in os.listdir(articles_path)
+            if not f.startswith('.') and not f.startswith('-')
+        ]
 
+        self.verbatim_articles = []
+        self.articles = []
         author_details = []
+
         for art in articles:
-            article = Article(path=os.path.join(articles_path, art))
-            self.articles.append(article)
+            art_path = os.path.join(articles_path, art)
+            if art.startswith('_'):
+                article = VerbatimArticle(art_path)
+                self.verbatim_articles.append(article)
+            else:
+                article = Article(art_path)
+                self.articles.append(article)
             article.compile()
 
         self.articles = sorted(self.articles, key=lambda a: a.authors_str)
@@ -556,6 +593,11 @@ class TvimDocument:
         art_file_content = []
         referats = []
         narticles = len(self.articles)
+        # collecting verbatim articles
+        for i, art in enumerate(self.verbatim_articles):
+            art_file_content.append(art.art_path)
+
+        # collecting scientific articles
         for i, art in enumerate(self.articles):
             author_details.extend(art.author_details)
             if art.art_path:
@@ -607,10 +649,9 @@ class TvimDocument:
                 self._update_params()
                 # второй запуск для создания ссылок и содержания
                 subprocess.run(cmd, stdout=subprocess.PIPE)
-                print('ТВИМ {} {} успешно собран'.format(self.year,
-                                                         self.number))
-                with open('tvim_{}_{}.json'.format(self.year, self.number),
-                          'wt') as json_file:
+                print(f'ТВИМ {self.year} {self.number} успешно собран')
+                with open(f'tvim_{self.year}_{self.number}.json', 'wt') \
+                        as json_file:
                     json.dump(self.as_dict(), json_file, indent=4,
                               sort_keys=False, ensure_ascii=False)
             else:
@@ -716,7 +757,8 @@ class ReportGenerator:
             p = doc.paragraphs[p_index]
             p.text = ''
             run = p.add_run(
-                'научный журнал «Таврический вестник информатики и математики», '
+                'научный журнал '
+                '«Таврический вестник информатики и математики», '
                 '{}, №{}'.format(self.tvim_doc.year, self.tvim_doc.number))
             run.bold = True
 
@@ -724,7 +766,8 @@ class ReportGenerator:
                               'Приложение1_Экспертиза публикации.docx'))
 
     def build_export_doc(self):
-        doc = Document(os.path.join(self.root_path, 'Экспортное заключение.docx'))
+        doc = Document(os.path.join(self.root_path,
+                                    'Экспортное заключение.docx'))
 
         p = doc.paragraphs[14]
         p.text = ''
@@ -761,6 +804,7 @@ class ReportGenerator:
         doc.save(os.path.join(self.root_path, 'Экспортное заключение.docx'))
 
     def build(self):
+        print('Создание документов...')
         if os.path.exists(self.root_path):
             shutil.rmtree(self.root_path)
         shutil.copytree(self.template_path, self.root_path)
@@ -768,17 +812,22 @@ class ReportGenerator:
         self.build_06zayavlenie()
         self.build_expertiza()
         self.build_export_doc()
+        print('Создание документов успешно завершено')
 
 
 if __name__ == '__main__':
-    argparser = argparse.ArgumentParser(description="TVIM compiler")
-    argparser.add_argument("--config", "-C", type=str,
-                           default="configs/config.yaml",
-                           help="path to config file in YAML format")
+    argparser = argparse.ArgumentParser(description='TVIM compiler')
+
+    argparser.add_argument('--config', '-C', type=str,
+                           default='configs/config.yaml',
+                           help='path to config file in YAML format')
+    argparser.add_argument('--report', '-R', action='store_true',
+                           help='build report')
     args = argparser.parse_args()
 
     tvim = TvimDocument.from_config(args.config)
     tvim.compile()
-    rep_gen = ReportGenerator.from_config(tvim, args.config)
-    rep_gen.build()
 
+    if args.report:
+        rep_gen = ReportGenerator.from_config(tvim, args.config)
+        rep_gen.build()

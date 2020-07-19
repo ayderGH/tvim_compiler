@@ -1,0 +1,784 @@
+\input{__init_counters__}
+\input{__to_rus__}
+
+\addcontentsline{toc}{art}{\textbf{Пискунова\;В.\;В., Третьяков\;Д.\;В.}
+$t$-дискриминанты с параметрами}
+\addcontentsline{tec}{art}{\textbf{Piskunova\;V.\;V., Tretyakov\;D.\;V.}
+$t$-discriminants with parameters}
+\label{Piskunova_V_V_Tret'jakov_D_V_begin}
+
+\markboth{{\footnotesize{\it \textbf{В.\;В.\;Пискунова, Д.\;В.\;Третьяков}}}}
+{{\footnotesize {\it \textbf{{$T$} - дискриминанты с параметрами}}}}
+
+\noindent {\bf \footnotesize УДК: 511.41}
+\noindent {\bf \footnotesize MSC2010: 11A55}
+
+\medskip
+\normalsize
+
+\label{Piskunova,Tretyakov_begin}
+
+\title{$T$-ДИСКРИМИНАНТЫ С ПАРАМЕТРАМИ}
+
+\author{В.\;В.\;Пискунова, Д.\;В.\;Третьяков}
+
+\address{Крымский федеральный университет им.~В.\;И.\;Вернадского \\ Таврическая академия \\
+факультет математики и информатики \\
+просп. акад. Вернадского, 4, Симферополь, 295007, Российская Федерация \\
+e-mail: \textit viktoryapiskunova@yandex.ru, dvttvd@mail.ru}
+
+\numberwithin{equation}{section}
+
+\begin{abstractX}{$t$-discriminants with parameters}{Piskunova\;V.\;V., Tretyakov\;D.\;V.}Quadratic irrationalities which have continues fractions decomposes of next forms:
+$$
+\alpha(h,t)=\frac{\sqrt{D}-b}{a}=
+[q_{0},\overline{q_{1},q_{2},...,q_{n},h,q_{n},...q_{2},q_{1},tq_{0}}],
+$$
+$$
+\alpha_{1}(h,t)=\frac{\sqrt{D_{1}}-b_{1}}{a_{1}}=
+[q_{0},\overline{q_{1},q_{2},...,q_{n},h,h,q_{n},...q_{2},q_{1},tq_{0}}],
+$$
+$$
+\alpha_{2}(h_1,h_2,t)=\frac{\sqrt{D_{2}}-b_{2}}{a_{2}}=
+[q_{0},\overline{q_{1},q_{2},...,q_{n},h_{1},h_{2},q_{n},...q_{2},q_{1},tq_{0}}]
+$$
+are considered in this paper. $h, \  h_{1}, \  h_{2}, \  t \geq 2$ are natural parameters and number system $\langle q_{1},q_{2},...,q_{n},q_{n},...q_{2},q_{1}\rangle$ is palindrome.
+
+Formulas for calculating $D, \ D_{i}, \ a, \ a_{i},  \ b, \ b_{i}, \  i=1,2$ are obtained.
+
+Monotone  irrationalities properties with respect to parameters are investigated. Case $t=2$ is previously considered.
+
+In first of two cases indicated monotonicity is depend on "semiperiod"  \ length $n$ for everyone $t \geq 2$.
+
+In third case for everyone $t \geq 2$ the monotone dependence is a more complicated. For fixed $h_{1}$ $\alpha_{2}$ is monotonically increasing (decreasing) with respect to $h_{2}$ and for fixed $h_{2}$ $\alpha_{2}$ is monotonically decreasing (increasing) with respect to $h_{1}$ depending on "semiperiod"  \ length $n$.
+
+The monotonicity with respect to parameter $t \geq 2$ investigated too. Obtained dependence is rather different and is not depending on "semiperiod".
+
+Oblique asymptote is found in all cases.
+
+Every considered case is illustrated by examples.
+\end{abstractX}
+\keywords{t-discriminants, continued periodic fractions with parameters, monotonicity.}
+
+\section*{Введение}
+
+Предлагаемая работа посвящена решению некоторых частных случаев одной из нерешенных задач теории цепных дробей, которая заключается в упорядочении двух цепных дробей по их внешнему виду.
+
+Более точно, в данной статье исследуются свойства монотонности цепных дробей следующего вида:
+
+\[\alpha(h,t)=\frac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}],\]
+\[\alpha(h,t)=\frac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}],\]
+\[\alpha(h_1,h_2,t)=\frac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},t{q_0}}],\]
+
+где ${h},\ {h_1},\ {h_2},\ {t}$ --- натуральные параметры и ${t}>2$.
+
+Случай $t=2$ рассмотрен в работе ~\cite{PiskunovaTretyakov:2017:5}. Найдена наклонная асимптота для каждого вида указанных цепных дробей.
+Некоторые результаты работы анонсированы в ~\cite{{Piskunova:2018:3},{Piskunova:2018:4},{PiskunovaTretyakov:2018:6}}.
+
+\section{Исследование цепных дробей вида
+\newline$\alpha=\cfrac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]$}
+
+
+\begin{definitionr}\cite{Tretyakov:2008:7}
+Квадратичные иррациональности \(\alpha=\cfrac{\sqrt{D}-b}{a}\), которые раскладываются в ЦД вида \([{q_0},\overline{{q_1},{q_2},\dots,{q_2},{q_1},t{q_0}}]\), где \(t\geq2\) --- натуральное число, называются \textbf{\(t\)-дискриминантами}.
+\end{definitionr}
+
+\begin{theoremr}\label{PiskunovaTretyakov:th:1} \cite{Tretyakov:2008:7} Равенство
+\[\alpha=\cfrac{\sqrt{D}-b}{a}=[{q_0},\overline{{q_1},{q_2},\dots,{q_2},{q_1},t{q_0}}],\]
+где $t\geq2$ --- натуральный параметр, возможно тогда и только тогда, когда
+
+\[2b=(t-2){q_0}a,\ q_0=[\alpha]>1.\]
+
+Если это условие выполнено, то
+\[b=(t-2){q_0}P_{n-1},\ a=2P_{n-1},\ D=(t{q_0}P_{n-1}+2Q_{n-1})^2+4(-1)^n,\]
+где
+\[\cfrac{P_{n-1}}{Q_{n-1}}=[{q_1},{q_2},\dots,{q_2},{q_1}].\]
+\end{theoremr}
+
+Используя известные сведения и теоремы из теории бесконечных цепных дробей (см., напр., \cite{{Arnold2009},{BUKHSHTAB1966},{Trignan1994}}), убеждаемся в справедливости следующего предложения.
+\begin{lemmar}\label{PiskunovaTretyakov:lem:1}\cite{Piskunova:2018:3}
+$1)$ если
+$\alpha(h,t)=\cfrac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]$ --- $t$-дискриминант,
+то \[D=\Bigl(h(t{q_0}{P^{2}_{n-1}}+2{P_{n-1}}{Q_{n-1}})+\bigl (2t{q_0}{P_{n-1}}{P_{n-2}}+2({Q_{n-1}}{P_{n-2}}+{P_{n-1}}{Q_{n-2}})\bigr)\Bigr)^{2}-4,\]
+\[b=(t-2){q_0}{P_{n-1}}(h{P_{n-1}}+2{P_{n-2}}),\ \ \ a=2\bigl(h{P^{2}_{n-1}}+2{P_{n-1}}{P_{n-2}}\bigr);\]
+
+$2)$ если $\alpha(h,t)=\cfrac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}]$ --- $t$-дискриминант,
+то
+\[D=\Bigl(t{q_0}({\mu}^{2}(h)+P^{2}_{n-1})+
+(2{{\mu(h)}{\beta(h)}+{P_{n-1}}{Q_{n-1}}})\Bigr)^2+4,\ \ \  a=2({\mu}^{2}(h)+P^{2}_{n-1}),\] \[b=(t-2){q_0}({\mu}^{2}(h)+P^{2}_{n-1}),\]
+где
+\[\mu(h)={P_{n-1}}h+{P_{n-2}},\ \ \ \beta(h)={Q_{n-1}}h+{Q_{n-2}};\]
+
+$3)$ если
+$\alpha(h_1,h_2,t)=\cfrac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},t{q_0}}],$
+то
+\[D=\bigl(t{q_0}\gamma(h)+({h_1}-{h_2})(-1)^n+2\delta(h)\bigr)^2+4,\ \ \ b=(t-2){q_0}\gamma(h)+(-1)^{n+1}({h_1}-{h_2}), \ \ \  a=2\gamma(h).\]
+Здесь
+\[\gamma(h)={\mu({h_1})}{\mu({h_2})}+{P^{2}_{n-1}}, \ \ \ \delta(h)={{\beta({h_1})}{\mu({h_2})}}+{P_{n-1}}{Q_{n-1}}.\]
+\end{lemmar}
+
+Доказательство этой леммы при $t=2$ было проведено в ~\cite{PiskunovaTretyakov:2017:5}. Доказательство настоящей леммы проводится аналогично.
+
+Рассмотрим дробь
+$$\alpha=\cfrac {\sqrt {D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}].$$
+
+В силу леммы \ref{PiskunovaTretyakov:lem:1}, $\alpha$ принимает вид:
+\begin{center}
+$\alpha=\frac {\bigl(2-t\bigr){q_0}{P_{n-1}}\bigl(h{P_{n-1}}+2{P_{n-2}}\bigr)+\sqrt {\bigl[h\bigl(t{q_0}{P^{2}_{n-1}}+2{P_{n-1}}{Q_{n-1}}\bigr)+\bigl (2t{q_0}{P_{n-1}}{P_{n-2}}+2({Q_{n-1}}{P_{n-2}}+{P_{n-1}}{Q_{n-2}})\bigr)\bigr]^{2}-4}}
+{2\bigl[h{P^{2}_{n-1}}+2{P_{n-1}}{P_{n-2}}\bigr]},$
+\end{center}
+где
+\[(2-t){q_0}{P_{n-1}}(h{P_{n-1}}+{P_{n-2}})\neq0.\]
+
+
+Для удобства в формуле для $\alpha$ введем следующие обозначения:
+\[t{q_0}P^{2}_{n-1}+2{P_{n-1}}{Q_{n-1}}=A,\ \ 2t{q_0}{P_{n-1}}{P_{n-2}}+2({Q_{n-1}}{P_{n-2}}+{P_{n-1}}{Q_{n-2}})=B,\]
+\[{P^{2}_{n-1}}=C,\ \ 2{P_{n-1}}{P_{n-2}}=E, \ \ (2-t){q_0}{P_{n-1}}(h{P_{n-1}}+{P_{n-2}})=M.\]
+
+Исследуем теперь величину $\alpha$ на монотонность, считая, что $h\in [1,+\infty)$ --- \ независимая переменная. Тогда $\alpha=\alpha(h)$ является непрерывно дифференцируемой на $[1,+\infty)$ функцией и, следовательно, можно применить дифференциальное исчисление.
+Вычислим функцию ${\alpha}^\prime(h):$
+
+${\alpha}^\prime=$
+%\cfrac {\Bigl({M}^\prime+{\bigl(\sqrt{(hA+B)^{2}-4}\bigr)}^\prime\Bigr) \bigl(2(hC+E)\bigr)-\bigl(M+\sqrt{(hA+B)^{2}-4}\bigr)\bigl(2(hC+E)\bigr)^\prime}{\bigl(2(hC+E)\bigr)^{2}}=$
+$\cfrac {\Biggl((2-t){q_0}{P^2_{n-1}}+\cfrac {(hA+B)A}{\sqrt {(hA+B)^{2}-4}}\Biggr)\bigl(2(hC+E)\bigr)-2C\bigl(M+\sqrt {(hA+B)^{2}-4}\bigr)}{\bigl(2(hC+E)\bigr)^{2}}$
+
+Рассмотрим подробнее числитель данной дроби:
+\[2(2-t){q_0}{P^{2}_{n-1}}(hC+E)+\frac {2A(hA+B)(hC+E)}{\sqrt{(hA+B)^{2}-4}}-2(2-t)Ch{q_0}{P^{2}_{n-1}}-4C(2-t){q_0}{P_{n-1}}{P_{n-2}}-\]
+\[-2C{\sqrt{(hA+B)^{2}-4}}=\frac {2A(hA+B)(hC+E)-2C\bigl((hA+B)^{2}-4\bigr)}{\sqrt{(hA+B)^{2}-4}}.\]
+%2(2-t){q_0}{P_{n-1}}({P_{n-1}}E-2C{P_{n-2}})+\]
+%2(2-t){q_0}{P^{2}_{n-1}}(hC+E-hC)+\frac {2A(hA+B)(hC+E)}{\sqrt{(hA+B)^{2}-4}}-\]
+%\newline
+%\[4C(2-t){q_0}{P_{n-1}}{P_{n-2}}-2C{\sqrt{(hA+B)^{2}-4}}=2(2-t){q_0}{P^{2}_{n-1}}E+\frac {2A(hA+B)(hC+E)}{\sqrt{(hA+B)^{2}-4}}-\]
+%\newline
+%\[4C(2-t){q_0}{P_{n-1}}{P_{n-2}}-2C{\sqrt{(hA+B)^{2}-4}}=\]
+%\newline
+
+%где
+%\[2(2-t){q_0}{P_{n-1}}({P_{n-1}}E-2C{P_{n-2}})=0.\]
+
+Отсюда
+\[{\alpha}^\prime=
+%\frac {2A(hA+B)(hC+E)-2C\bigl((hA+B)^{2}-4\bigr)}{4(hC+E)^{2}{\sqrt{(hA+B)^{2}-4}}}=\]
+\frac {A(hA+B)(hC+E)-C\bigl((hA+B)^{2}-4\bigr)}{2(hC+E)^{2}\cdot {\sqrt{(hA+B)^{2}-4}}}.\]
+
+Очевидно, что:
+\[2(hC+E)^{2}\cdot \sqrt{(hA+B)^{2}-4}>0.\]
+Нам необходимо узнать, при каких условиях производная функции положительна, а при каких отрицательна. Для этого преобразуем числитель ${\alpha}^\prime$:
+\[A\bigl(ACh^2+(AE+BC)h+BE\bigr)-A^{2}Ch^2-2hABC-CB^2+4C=(Ah+B)(AE-BC)+4C.\]
+Так как
+\[Ah+B=(t{q_0}{P^2_{n-1}}+2{P_{n-1}}{Q_{n-1}})h+(2t{q_0}{P_{n-1}}{P_{n-2}}+2{Q_{n-1}}{P_{n-2}}+2{P_{n-1}}{Q_{n-2}})>0,\] \[AE-BC=(t{q_0}{P^2_{n-1}}+2{P_{n-1}}{Q_{n-1}})(2{P_{n-1}}{P_{n-2}})-
+(2t{q_0}{P_{n-1}}{P_{n-2}}+2{Q_{n-1}}{P_{n-2}}+\]
+\[+2{P_{n-1}}{Q_{n-2}}){P^2_{n-1}}=2(-1)^{n+1}{P^2_{n-1}},\]
+то ${\alpha}^\prime>0$ при нечетном $n$ и, следовательно, ${\alpha}^\prime<0$ при четном $n$, \ $h=1$ --- точка экстремума для $\alpha(h)$ ($max$ при четном $n$ и $min$ при нечетном).
+
+Таким образом, доказана
+\begin{theoremr}\label{PiskunovaTretyakov:th:2}
+$t$-дискриминанты $[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]$ при нечетном $n$ возрастают, а при четном $n$ убывают, с ростом натурального параметра $h$ и для любого $t$.
+\end{theoremr}
+
+Для функции $\alpha$ вычислим наклонную асимптоту, которая задается уравнением $y=kh+b$, где
+\[k=\lim_{h\to +\infty}\frac {\alpha(h)}h, \ \ b=\lim_{h\to +\infty}(\alpha(h)-kh). \]
+
+\[k=\lim_{h\to +\infty}\cfrac {\alpha(h)}h=\lim_{h\to +\infty}\cfrac {\bigl((2-t){q_0}{P_{n-1}}(h{P_{n-1}}+2{P_{n-2}})\bigr)+\sqrt{(Ah+B)^2-4}}{2h(Ch+E)}=\]
+%\[\lim_{h\to +\infty}\cfrac {\bigl((2-t){q_0}{P_{n-1}}(h{P_{n-1}}+2{P_{n-2}})\bigr)+\sqrt{A^2h^2+2ABh+B^2-4}}{2h(Ch+E)}=\]
+%\newline
+%\[\lim_{h\to +\infty}\cfrac {\bigl((2-t)h{q_0}{P^{2}_{n-1}}+2(2-t){q_0}{P_{n-1}}{P_{n-2}}\bigr)+\sqrt{h^2\Bigl(A^2+\cfrac {2}{h}AB+\cfrac {B^2}{h^2}-\cfrac 4{h^2}\Bigr)}}{2h(Ch+E)}=\]
+%\[\lim_{h\to +\infty}\cfrac {h\biggl((2-t){q_0}{P^{2}_{n-1}}+\cfrac {2}{h}(2-t){q_0}{P_{n-1}}{P_{n-2}}\biggr)+h\sqrt{A^2+\cfrac {2}{h}AB+\cfrac {B^2}{h^2}-\cfrac 4{h^2}}}{2h(Ch+E)}=\]
+\[=\lim_{h\to +\infty}\cfrac {\biggl((2-t){q_0}{P^{2}_{n-1}}+\cfrac {2}{h}(2-t){q_0}{P_{n-1}}{P_{n-2}}\biggr)+\sqrt{A^2+\cfrac {2}{h}AB+\cfrac {B^2}{h^2}-\cfrac 4{h^2}}}{2h\Bigl(C+\cfrac Eh\Bigr)}=\]
+\[=\lim_{h\to +\infty}\cfrac {(2-t){q_0}{P^{2}_{n-1}}+A}{2Ch}=0.\]
+
+Так как $k=0$, то
+\[b=\lim_{h\to +\infty}\alpha(h)=
+\lim_{h\to +\infty}\cfrac {\bigl((2-t){q_0}{P_{n-1}}(h{P_{n-1}}+2{P_{n-2}})\bigr)+\sqrt{(Ah+B)^2-4}}{2(Ch+E)}=\]
+%\[=\lim_{h\to +\infty}\cfrac {\bigl((2-t)h{q_0}{P^{2}_{n-1}}+2(2-t){q_0}{P_{n-1}}{P_{n-2}}\bigr)+\sqrt{A^2h^2+2hAB+B^2-4}}{2(Ch+E)}=\]
+\[=\lim_{h\to +\infty}\cfrac {h\Biggl((2-t){q_0}{P^{2}_{n-1}}+\cfrac {2}{h}(2-t){q_0}{P_{n-1}}{P_{n-2}}+\sqrt{A^2+\cfrac {2}{h}AB+\cfrac {B^2}{h^2}-\cfrac 4{h^2}}\Biggr)}{2h\Bigl(C+\cfrac Eh\Bigr)}=\]
+\[=\lim_{h\to +\infty}\cfrac {(2-t){q_0}{P^{2}_{n-1}}+A}{2C}=\cfrac {(2-t){q_0}{P^{2}_{n-1}}+A}{2C}.\]
+
+Поскольку $A=t{q_0}P^{2}_{n-1}+2{P_{n-1}}{Q_{n-1}},\ \ C=P^{2}_{n-1}$, то $b$ принимает вид:
+\[b=\frac {(2-t){q_0}{P^{2}_{n-1}}+A}{2C}=
+%\frac {(2-t){q_0}{P^{2}_{n-1}}+t{q_0}P^{2}_{n-1}+2{P_{n-1}}{Q_{n-1}}}{2P^{2}_{n-1}}=\]
+\frac {(2-t){q_0}}{2}+\frac {tq_0}{2}+\frac {Q_{n-1}}{P_{n-1}}={q_0}+\frac {Q_{n-1}}{P_{n-1}}.\]
+
+Таким образом, доказана
+\begin{theoremr}\label{PiskunovaTretyakov:th:3}
+Для $t$-дискриминантов $[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y={q_0}+\cfrac {Q_{n-1}}{P_{n-1}}$.
+\end{theoremr}
+
+\begin{corollaryr}
+\begin{enumerate}
+\item[1) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]=o(h)$;
+\item[2) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}] \ \sim \ {{q_0}+\cfrac {Q_{n-1}}{P_{n-1}}}$, при ${h\to +\infty}$.
+\end{enumerate}
+\end{corollaryr}
+
+
+Рассмотрим \emph{примеры} периодических ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},{t{q_0}}}]$,
+\newline когда $h=1,\dots,8$, $t=4$ и $t=10$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler}
+а) при четном $n$:
+\[\alpha(1)=[2,\overline{1,2,1,2,1,8}]=\frac {4\sqrt{35}-10}{5}\approx 2,7328\dots\]
+\[\alpha(2)=[2,\overline{1,2,2,2,1,8}]=\frac {\sqrt{798}-12}{6}\approx 2,7081\dots\]
+\[\alpha(3)=[2,\overline{1,2,3,2,1,8}]=\frac {2\sqrt{6006}-66}{33}\approx 2,6968\dots\]
+\[\alpha(4)=[2,\overline{1,2,4,2,1,8}]=\frac {\sqrt{22}-2}{1}\approx 2,6904\dots\]
+\[\alpha(5)=[2,\overline{1,2,5,2,1,8}]=\frac {4\sqrt{3570}-102}{51}\approx 2,6862\dots\]
+\[\alpha(6)=[2,\overline{1,2,6,2,1,8}]=\frac {\sqrt{4935}-30}{15}\approx 2,6833\dots\]
+\[\alpha(7)=[2,\overline{1,2,7,2,1,8}]=\frac {6\sqrt{322}-46}{23}\approx 2,6811\dots\]
+\[\alpha(8)=[2,\overline{1,2,8,2,1,8}]=\frac {\sqrt{33306}-78}{39}\approx 2,6794\dots\]
+б) при нечетном $n$:
+\[\alpha(1)=[1,\overline{2,3,4,2,5,1,5,2,4,3,2,10}]=-4+\frac {\sqrt{979141914255}}{182135}\approx 1,432871\dots\]
+\[\alpha(2)=[1,\overline{2,3,4,2,5,2,5,2,4,3,2,10}]=-4+\frac {\sqrt{566248955}}{4380}\approx 1,432873\dots\]
+\[\alpha(3)=[1,\overline{2,3,4,2,5,3,5,2,4,3,2,10}]=-4+\frac {\sqrt{5939485655235}}{448585}\approx 1,4328744\dots\]
+\[\alpha(4)=[1,\overline{2,3,4,2,5,4,5,2,4,3,2,10}]=-4+\frac {\sqrt{99912951318}}{58181}\approx 1,4328749\dots\]
+\[\alpha(5)=[1,\overline{2,3,4,2,5,5,5,2,4,3,2,10}]=-4+\frac {\sqrt{1676762556935}}{238345}\approx 1,432875\dots\]
+\[\alpha(6)=[1,\overline{2,3,4,2,5,6,5,2,4,3,2,10}]=-4+\frac {\sqrt{5309547324270}}{424130}\approx 1,4328755\dots\]
+\[\alpha(7)=[1,\overline{2,3,4,2,5,7,5,2,4,3,2,10}]=-4+\frac {\sqrt{28433273985795}}{981485}\approx 1,4328756\dots\]
+\[\alpha(8)=[1,\overline{2,3,4,2,5,8,5,2,4,3,2,10}]=-4+\frac {2\sqrt{254695257490}}{185785}\approx 1,4328758\dots\]
+\end{exampler}
+Таким образом, рассматриваемые дроби ведут себя следующим образом: возрастают при нечетном $n$, а при четном $n$ --- убывают.
+
+\begin{theoremr}\label{PiskunovaTretyakov:th:4}
+\begin{enumerate}
+\item[1) ]$t$-дискриминанты $[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]$ возрастают по $t$ для любого $h$ и $n$;
+\item[2) ]для ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y=\cfrac{\bigl(4\tilde{A}^{2}+2\tilde{B}\tilde{C}q_{0}\bigr)}{2\tilde{B}(\tilde{A}+\tilde{B}q_{0})}$.
+\end{enumerate}
+\end{theoremr}
+
+\begin{proof}
+\begin{enumerate}
+\item[1) ]считая $t$ вещественным параметром, меняющимся на полуинтервале $[2,+\infty)$,
+продифференцируем функцию
+\end{enumerate}
+
+\[\alpha(h,t)=\cfrac {(2-t)\tilde{A}+\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}{2\tilde{E}}\]
+по $t$ на указанном промежутке:
+
+\[\alpha^\prime(h,t)=\cfrac 1{2\tilde{E}}\Biggl(-\tilde{A}+\cfrac {(\tilde{B}tq_{0}+\tilde{C})\tilde{B}q_{0}}{\sqrt {(\tilde{B}tq_{0}+\tilde{C})^{2}-4}}\Biggr)=\]
+\[=\cfrac 1{2\tilde{E}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}\cdot\biggl(\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)\tilde{B}q_{0}-\tilde{A}\sqrt {(\tilde{B}tq_{0}+\tilde{C})^{2}-4}\biggr)=\]
+\[=\cfrac 1{2\tilde{E}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}\cdot\cfrac{\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}\tilde{B}^{2}q^{2}_{0}-\tilde{A}^{2}
+\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}+4\tilde{A}^{2}}{\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)\tilde{B}q_{0}+\tilde{A}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}=\]
+\[=\cfrac{\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}\bigl(\tilde{B}^{2}q^{2}_{0}-\tilde{A}^{2}\bigr)+4\tilde{A}^{2}}
+{2\tilde{E}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}\cdot\biggl(\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)\tilde{B}q_{0}+\tilde{A}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}\biggr)}=\]
+\[=\cfrac{4\tilde{A}^{2}}{2\tilde{E}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}\cdot\biggl(\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)\tilde{B}q_{0}+\tilde{A}\sqrt {\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}\biggr)}>0.\]
+
+Здесь
+\[\tilde{B}^{2}q^{2}_{0}-\tilde{A}^{2}=0, \ \ \tilde{A}=q_{0}P_{n-1}(hP_{n-1}+2P_{n-2}),\]
+\[\tilde{C}=2hP_{n-1}Q_{n-1}+2P_{n-2}Q_{n-1}+2P_{n-1}Q_{n-2},\ \ \tilde{B}=\tilde{E}=hP^{2}_{n-1}+2P_{n-1}P_{n-2}.\]
+
+\begin{enumerate}
+\item[2) ]теперь найдем наклонную асимптоту функции $\alpha(h,t)$ по $t$:
+\end{enumerate}
+
+\[k=\lim_{t\to +\infty}\cfrac{\alpha(t)}t=\lim_{t\to +\infty}\cfrac{-\tilde{A}+\cfrac{2\tilde{A}}{t}+\sqrt{\biggl(\tilde{B}q_{0}+\cfrac {\tilde{C}}t\biggr)^{2}-\cfrac4{t^{2}}}}{2\tilde{E}}=\]
+\[=\cfrac{-\tilde{A}+\tilde{B}q_{0}}{2\tilde{B}}=\cfrac {1}{2\tilde{B}}\biggl(-q_{0}\bigl(hP^{2}_{n-1}+2P_{n-1}P_{n-2}\bigr)+\bigl(hP^{2}_{n-1}+2P_{n-1}P_{n-2}\bigr)q_{0}\biggr)=0.\]
+
+\[b=\lim_{t\to +\infty}\alpha(t)=\lim_{t\to +\infty}\cfrac{(2-t)\tilde{A}+\sqrt{\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}{2\tilde{B}}=\]
+\[=\cfrac1{2\tilde{B}}\lim_{t\to +\infty}\cfrac{(2-t)^{2}\tilde{A}^{2}-\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}+4}{(2-t)\tilde{A}-\sqrt{\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}=\]
+\[=-\cfrac1{2\tilde{B}}\lim_{t\to +\infty}\cfrac{t^{2}\bigl(\tilde{A}^{2}-\tilde{B}^{2}q^{2}_{0}\bigr)-\bigl(4\tilde{A}^{2}+2\tilde{B}\tilde{C}q_{0}\bigr)t+4\tilde{A}^{2}-\tilde{C}^{2}+4}
+{(t-2)\tilde{A}-\sqrt{\bigl(\tilde{B}tq_{0}+\tilde{C}\bigr)^{2}-4}}=\]
+\[=-\cfrac1{2\tilde{B}}\lim_{t\to +\infty}\cfrac{-\bigl(4\tilde{A}^{2}+2\tilde{B}\tilde{C}q_{0}\bigr)+\cfrac{4\tilde{A}^{2}}t-\cfrac{\tilde{C}^{2}}t+\cfrac4t}
+{\tilde{A}-\cfrac{2\tilde{A}}{t}-\sqrt{\biggl(\tilde{B}q_{0}+\cfrac{\tilde{C}}t\biggr)^{2}-\cfrac{4}{t^{2}}}}=\]
+\[=- \ \cfrac{-\bigl(4\tilde{A}^{2}+2\tilde{B}\tilde{C}q_{0}\bigr)}{2\tilde{B}(\tilde{A}+\tilde{B}q_{0})}=
+\cfrac{\bigl(4\tilde{A}^{2}+2\tilde{B}\tilde{C}q_{0}\bigr)}{2\tilde{B}(\tilde{A}+\tilde{B}q_{0})}.\]
+\end{proof}
+
+
+Рассмотрим $t$-дискриминанты вида $[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},{t{q_0}}}]$,
+когда $h=1$, \newline $t\geq 2$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler}
+\[\alpha(2)=[2,\overline{1,2,1,2,1,4}]=\frac {4\sqrt{105}}{15}\approx 2,732520\dots\]
+\[\alpha(3)=[2,\overline{1,2,1,2,1,6}]=\frac{\sqrt{3135}-15}{15}\approx 2,732738\dots\]
+\[\alpha(4)=[2,\overline{1,2,1,2,1,8}]=\frac {4\sqrt{35}-10}{5}\approx 2,732863\dots\]
+\[\alpha(5)=[2,\overline{1,2,1,2,1,10}]=\frac {\sqrt{7395}-45}{15}\approx 2,732945\dots\]
+\[\alpha(6)=[2,\overline{1,2,1,2,1,12}]=\frac {2\sqrt{102}-12}{3}\approx 2,733003\dots\]
+\[\alpha(7)=[2,\overline{1,2,1,2,1,14}]=\frac {\sqrt{1495}-25}{5}\approx 2,733045\dots\]
+\[\alpha(8)=[2,\overline{1,2,1,2,1,16}]=\frac{2\sqrt{4290}-90}{15}\approx 2,733078\dots\]
+\[\alpha(9)=[2,\overline{1,2,1,2,1,18}]=\frac {7\sqrt{435}-105}{15}\approx 2,733105\dots\]
+\[\alpha(10)=[2,\overline{1,2,1,2,1,20}]=\frac {24\sqrt{5}-40}{5}\approx 2,733126\dots\]
+\end{exampler}
+
+\begin{corollaryr}
+\begin{enumerate}
+\item[1) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}]=o(t)$;
+\item[2) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h},{q_n},\dots,{q_1},t{q_0}}] \ \sim \ {\cfrac{\bigl(4\tilde{A}^{2}+2\tilde{B}\tilde{C}q_{0}\bigr)}{2\tilde{B}(\tilde{A}+\tilde{B}q_{0})}}$, при ${t\to +\infty}$.
+\end{enumerate}
+\end{corollaryr}
+
+
+\section{Исследование цепных дробей вида
+\newline$\alpha=\cfrac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}]$}
+
+\begin{theoremr}\label{PiskunovaTretyakov:th:5}
+\begin{enumerate}
+\item[1) ]$t$-дискриминанты $[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}]$ при нечетном $n$ возрастают, а при четном $n$ убывают, с ростом натурального параметра $h$ и для любого $t$;
+\item[2) ]для ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y={q_0}+\cfrac {Q_{n-1}}{P_{n-1}}$.
+\end{enumerate}
+\end{theoremr}
+
+
+\begin{proof}
+
+\begin{enumerate}
+\item[1) ]рассмотрим дробь
+\end{enumerate}
+$$\alpha=\cfrac {\sqrt {D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}],$$
+которая в силу леммы \ref{PiskunovaTretyakov:lem:1} принимает следующий вид:
+
+\begin{equation}
+\alpha=\frac {{q_0}(2-t)({\mu}^{2}(h)+{P^{2}_{n-1}})+\sqrt{\biggl(t{q_0}\bigl({\mu}^{2}(h)+P^{2}_{n-1}\bigr)+
+2\bigl({{\mu(h)}{\beta(h)}+{P_{n-1}}{Q_{n-1}}}\bigr)\biggr)^2+4}}{2\bigl({\mu}^{2}(h)+P^{2}_{n-1}\bigr)},
+\end{equation}
+где
+\[(2-t){q_0}({\mu}^{2}(h)+{P^{2}_{n-1}})\neq0.\]
+
+Для удобства введем следующие обозначения:
+\[F(h)={\mu}^{2}(h)+P^{2}_{n-1},  \ \ G(h)={{\mu(h)}{\beta(h)}+{P_{n-1}}{Q_{n-1}}}.\]
+Тогда
+\[\alpha=\frac {(2-t){q_0}F(h)+\sqrt{\bigl(t{q_0}F(h)+2G(h)\bigr)^2+4}}{2F(h)}.\]
+
+Вычисление функции ${\alpha}^\prime(h)$ проводится аналогично пункту 1.
+
+Таким образом, ${\alpha}^\prime(h)$ примет следующий вид:
+\[{\alpha}^\prime(h)=\frac {\cfrac {F(h)\bigl(t{q_0}F(h)+2G(h)\bigr)\bigl(t{q_0}F^\prime(h)+2G^\prime(h)\bigr)}{\sqrt {\bigl(t{q_0}F(h)+2G(h)\bigr)^{2}+4}}-F^\prime(h)\sqrt {\bigl(t{q_0}F(h)+2G(h)\bigr)^{2}+4}}{2F^{2}(h)}=\]
+\[=2(-1)^{n+1}\bigl(t{q_0}F(h)+2G(h)\bigr)\Bigl({P^{2}_{n-1}}(h-1)^{2}-2{P^{2}_{n-1}}+{P^{2}_{n-2}}\Bigr)+\]
+\[+2h{P^{2}_{n-1}}\biggl(2(-1)^{n+1}\bigl(t{q_0}F(h)+2G(h)\bigr)-4\biggr)+
+2{P_{n-1}}{P_{n-2}}\biggl(2(-1)^{n+1}\bigl(t{q_0}F(h)+2G(h)\bigr)h-4\biggr),\]
+где
+\[\bigl(t{q_0}F(h)+2G(h)\bigr)>0.\]
+
+Нам необходимо узнать, при каких условиях производная функции положительна, а при каких отрицательна.
+
+Так как
+\[(t{q_0}F(h)+2G(h))>0,\]
+то ${\alpha}^\prime(h)>0$ при нечетном $n$ и, следовательно, ${\alpha}^\prime(h)<0$ при четном $n$, $h=1$ --- точка экстремума для $\alpha(h)$ ($max$ при четном $n$ и $min$ при нечетном $n$).
+
+
+\begin{enumerate}
+\item[2) ]наклонная асимптота для $\alpha(h)$ вычисляется аналогичным образом (см. предыдущий пункт):
+\end{enumerate}
+\[k=\lim_{h\to +\infty}\cfrac {\alpha(h)}h=0, \ \ \ b=\lim_{h\to +\infty}\alpha(h)={q_0}+\cfrac {Q_{n-1}}{P_{n-1}}.\]
+\end{proof}
+
+
+\begin{corollaryr}\label{PiskunovaTretyakov:cor:3}
+\begin{enumerate}
+\item[1) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}]=o(h)$;
+\item[2) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},t{q_0}}] \ \sim \ {{q_0}+\cfrac {Q_{n-1}}{P_{n-1}}}$, при ${h\to +\infty}$ и для любого $t$.
+\end{enumerate}
+\end{corollaryr}
+
+
+Рассмотрим \emph{примеры} периодических ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},{t{q_0}}}]$,
+\newline
+когда $h=1,\dots,8$, $t=5$ и $t=6$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler}
+а) при четном $n$:
+\[\alpha(1)=[2,\overline{1,2,1,1,2,1,10}]=\frac {\sqrt{818}-15}{5}\approx 2,7201\dots\]
+\[\alpha(2)=[2,\overline{1,2,2,2,2,1,10}]=\frac {\sqrt{109562}-174}{58}\approx 2,7069\dots\]
+\[\alpha(3)=[2,\overline{1,2,3,3,2,1,10}]=\frac {\sqrt{385642}-327}{109}\approx 2,6972\dots\]
+\[\alpha(4)=[2,\overline{1,2,4,4,2,1,10}]=\frac {\sqrt{1026170}-534}{178}\approx 2,6910\dots\]
+\[\alpha(5)=[2,\overline{1,2,5,5,2,1,10}]=\frac {\sqrt{90842}-159}{53}\approx 2,6867\dots\]
+\[\alpha(6)=[2,\overline{1,2,6,6,2,1,10}]=\frac {\sqrt{4422610}-1110}{370}\approx 2,6837\dots\]
+\[\alpha(7)=[2,\overline{1,2,7,7,2,1,10}]=\frac {\sqrt{7845602}-1479}{493}\approx 2,6815\dots\]
+\[\alpha(8)=[2,\overline{1,2,8,8,2,1,10}]=\frac {\sqrt{12967202}-1902}{634}\approx 2,6798\dots\]
+б) при нечетном $n$:
+\[\alpha(1)=[1,\overline{2,3,5,1,1,5,3,2,6}]=\frac {\sqrt{5146546}-1322}{661}\approx 1,4320\dots\]
+\[\alpha(2)=[1,\overline{2,3,5,2,2,5,3,2,6}]=\frac {\sqrt{740765090}-15860}{7930}\approx 1,4321\dots\]
+\[\alpha(3)=[1,\overline{2,3,5,3,3,5,3,2,6}]=\frac {13\sqrt{9698}-746}{373}\approx 1,43222\dots\]
+\[\alpha(4)=[1,\overline{2,3,5,4,4,5,3,2,6}]=\frac {\sqrt{7596691282}-50788}{25394}\approx 1,43226\dots\]
+\[\alpha(5)=[1,\overline{2,3,5,5,5,5,3,2,6}]=\frac {\sqrt{17220525530}-76466}{38233}\approx 1,43229\dots\]
+\[\alpha(6)=[1,\overline{2,3,5,6,6,5,3,2,6}]=\frac {\sqrt{1364460170}-21524}{10762}\approx 1,43231\dots\]
+\[\alpha(7)=[1,\overline{2,3,5,7,7,5,3,2,6}]=\frac {\sqrt{2451378730}-28850}{14425}\approx 1,43233\dots\]
+\[\alpha(8)=[1,\overline{2,3,5,8,8,5,3,2,6}]=\frac {\sqrt{102284192762}-186356}{93178}\approx 1,43234\dots.\]
+\end{exampler}
+Таким образом, рассматриваемые дроби возрастают при нечетном $n$, а при четном $n$ --- убывают.
+
+
+\section{Исследование цепных дробей вида
+\newline$\alpha=\cfrac {\sqrt{D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},t{q_0}}]$}
+
+Рассмотрим дробь
+$$\alpha=\cfrac {\sqrt {D}-b}a=[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},t{q_0}}],$$
+\noindent
+которая принимает следующий вид по лемме \ref{PiskunovaTretyakov:lem:1}:
+\begin{equation}
+\alpha=\frac {{q_0}(2-t)\gamma (h)+(-1)^{n+1}({h_1}-{h_2})+\sqrt{\bigl(t{q_0}\gamma (h)+({h_1}-{h_2})(-1)^{n}+2\delta (h)\bigr)^2+4}}{2\gamma (h)},
+\end{equation}
+где
+\[\mu(h_1)={h_1}{P_{n-1}}+{P_{n-2}}, \ \ \ \mu(h_2)={h_2}{P_{n-1}}+{P_{n-2}}, \ \ \ \beta(h_1)={h_1}{Q_{n-1}}+{Q_{n-2}},\]
+\[\beta(h_2)={h_2}{Q_{n-1}}+{Q_{n-2}}, \ \ \ \gamma(h)=\mu(h_1)\mu(h_2)+{P^{2}_{n-1}}, \ \ \ \delta(h)=\beta(h_1)\mu(h_2)+{P_{n-1}}{Q_{n-1}}.\]
+
+Для удобства введем следующие обозначения:
+\[A=(2-t){q_0}\gamma(h), \ \ B=(-1)^{n+1}({h_1}-{h_2}), \ \ C=\gamma(h), \ \ F=(-1)^{n}({h_1}-{h_2}), \ \ E=2\delta(h).\]
+
+Тогда
+\[\alpha=\frac {A+B+\sqrt{\bigl(t{q_0}C+F+E\bigr)^2+4}}{2C}.\]
+
+Теперь вычислим функцию ${\alpha}^\prime_{h_1}({h_1},{h_2})$, считая $h_2$ постоянной:
+\small \[\alpha^\prime_{h_1}({h_1},{h_2})=
+%\frac{2C\bigl(A+B+\sqrt{(t{q_0}C+F+E)^{2}+4}\bigr)^\prime-
+%2C^\prime{\bigl(A+B+\sqrt{(t{q_0}C+F+E)^{2}+4}\bigr)}}{4C^2}=\]
+\frac{2CA^\prime+2CB^\prime+2C\frac {\bigl(t{q_0}C+F+E\bigr)\bigl(t{q_0}C^\prime+F^\prime+E^\prime\bigr)}{\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}}-
+2C^\prime{\bigl(A+B+\sqrt{(t{q_0}C+F+E)^{2}+4}\bigr)}}{4C^2}=\]
+\normalsize
+\begin{center}
+$=\frac {\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}\bigl(C(A^\prime+B^\prime)-(A+B)C^\prime\bigr)+
+\bigl(t{q_0}C+F+E\bigr)\bigl(C(t{q_0}C^\prime+F^\prime+E^\prime)-(t{q_0}C+F+E)C^\prime\bigr)-
+4C^\prime}{2C^2{\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}}}.$
+\end{center}
+
+
+Преобразуем выражения, составляющие числитель:
+\[CA^\prime-AC^\prime=(2-t){q_0}\bigl({\mu(h_1)}{\mu(h_2)}+{P^{2}_{n-1}}\bigr)^\prime{\gamma(h)}-
+(2-t){q_0}\bigl({\mu(h_1)}{\mu(h_2)}+{P^{2}_{n-1}}\bigr)^\prime{\gamma(h)}=0.\]
+\[CB^\prime-BC^\prime=(-1)^{n+1}{\gamma(h)}-(-1)^{n+1}({h_1}-{h_2}){{\mu(h_1)}{\mu(h_2)}+{P^{2}_{n-1}}}^\prime=(-1)^{n+1}\bigl({\mu^{2}(h_2)}+{P^{2}_{n-1}}\bigr).\]
+\[C(t{q_0}C^\prime+F^\prime+E^\prime)-(t{q_0}C+F+E)C^\prime={\gamma(h)}\bigl(t{q_0}{\mu(h_2)}{P_{n-1}}+(-1)^{n}+2{\mu(h_2)}{Q_{n-1}}\bigr)-\]
+\[-\bigl(t{q_0}{\gamma(h)}+(-1)^{n}({h_1}-{h_2})+2{\delta(h)}\bigr){\mu(h_2)}{P_{n-1}}=(-1)^{n}\bigl({P^{2}_{n-1}}-{\mu^{2}(h_2)}\bigr).\]
+
+Таким образом, получаем следующую формулу:
+\begin{center}
+$\alpha^\prime_{h_1}(h_1,h_2)=$ $=\frac{\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}\Bigl((-1)^{n+1}\bigl({P^{2}_{n-1}}+{\mu^{2}(h_2)}\bigr)\Bigr)+
+\bigl(t{q_0}C+F+E\bigr)\Bigl((-1)^{n}\bigl({P^{2}_{n-1}}-{\mu^{2}(h_2)}\bigr)\Bigr)-4{\mu(h_2)}{P_{n-1}}}{2\bigl({\mu(h_1)}{\mu(h_2)}+
+{P^{2}_{n-1}}\bigr)^{2}{\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}}}.$
+\end{center}
+
+%где
+%\[2\bigl({\mu(h_1)}{\mu(h_2)}+{P^{2}_{n-1}}\bigr)^{2}{\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}}>0.\]
+
+%Нам необходимо узнать, при каких условиях производная функции положительна, а при каких - отрицательна.
+Рассмотрим подробнее числитель данной дроби, считая, что $n$ нечетное:
+\[{\bigl({P^{2}_{n-1}}+{\mu^{2}(h_2)}\bigr)}\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4}-\bigl(t{q_0}C+F+E\bigr)\bigl({P^{2}_{n-1}}-
+{\mu^{2}(h_2)}\bigr)-4{\mu(h_2)}{P_{n-1}}.\]
+
+Заметим, что выражение
+\[-(t{q_0}C+F+E)({P^{2}_{n-1}}-{\mu}^{2}(h_2))=(t{q_0}C+F+E)\bigl(({h^{2}_2}-1){P^{2}_{n-1}}+2{h_2}{P_{n-1}}{P_{n-2}}+{P^{2}_{n-2}}\bigr)>0,\]
+где $({h^{2}_2}-1)\geq0.$
+
+Остается определить, какой знак принимает оставшаяся часть числителя при нечетном $n$.
+\small \[\bigl({P^{2}_{n-1}}+{\mu^{2}(h_2)}\bigr)\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4} \ -4{\mu(h_2)}{P_{n-1}}=A-4{\mu(h_2)}{P_{n-1}}\geq A-({\mu(h_2)}+{P_{n-1}})^{2}\geq\] \normalsize \[\geq2({\mu^{2}(h_2)}+{P^{2}_{n-1}})-({\mu(h_2)}+{P_{n-1}})^{2}=2{\mu^{2}(h_2)}+2{P^{2}_{n-1}}-{\mu^{2}(h_2)}-2{\mu(h_2)}{P_{n-1}}-{P^{2}_{n-1}}=\]
+\[={\mu^{2}(h_2)}+{P^{2}_{n-1}}-2{\mu(h_2)}{P_{n-1}}\geq0.\]
+
+Пусть теперь $n$ --- четное, тогда
+\[-\bigl({P^{2}_{n-1}}+{\mu^{2}(h_2)}\bigr)\sqrt{\bigl(t{q_0}C+F+E\bigr)^{2}+4} \ +\bigl(t{q_0}C+F+E\bigr)\bigl({P^{2}_{n-1}}-
+{\mu^{2}(h_2)}\bigr)-4{\mu(h_2)}{P_{n-1}}<0,\]
+где ${P^{2}_{n-1}}-{\mu^{2}(h_2)}={P^{2}_{n-1}}(1-{h^{2}_2})-2{h_2}{P_{n-1}}{P_{n-2}}-{P^{2}_{n-2}}<0, \ \ \ (1-{h^{2}_2})\leq0.$
+
+Таким образом, при фиксированном $h_2$ функция $\alpha^\prime_{h_1}$ ведет себя следующим образом: при нечетном $n$ она положительна, а при четном --- отрицательна.
+
+Следовательно, доказана
+\begin{theoremr}\label{PiskunovaTretyakov:th:6}
+Если $h_2$ --- фиксированный параметр, то ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},t{q_0}}]$ при нечетном $n$ возрастают, а при четном $n$ убывают, с ростом параметра $h_1$ и для любого $t$.
+\end{theoremr}
+
+
+Наклонная асимптота для $\alpha(h)$ вычисляется аналогичным образом (см. пункт 1):
+\[k=\lim_{{h_1}\to +\infty}\cfrac {\alpha(h_1,h_2)}{h_1}=\lim_{{h_1}\to +\infty}\cfrac {(2-t){q_0}{A_1}+(-1)^{n+1}+\sqrt{C_1}}{2{h_1}{A_1}}=0,\]
+где
+\small \[A_1={h_2}{P^{2}_{n-1}}+{P_{n-1}}{P_{n-2}}, \ \ \ C_1=t^{2}{{q}^{2}_0}({{h}^{2}_2}{P^{4}_{n-1}}+2{h_2}{P^{3}_{n-1}}{P_{n-2}}+{P^{2}_{n-1}}{P^{2}_{n-2}})+1+t{q_0}(2(-1)^{n}{h_2}{P^{2}_{n-1}}+\]
+\[+2(-1)^{n}{P_{n-1}}{P_{n-2}}+4{h^{2}_2}{P^{3}_{n-1}}{Q_{n-1}}+8{h_2}{P^{2}_{n-1}}{P_{n-2}}{Q_{n-1}}+4{P_{n-1}}{P^{2}_{n-2}}{Q_{n-1}})+\]
+\[+4(-1)^{n}({h_2}{P_{n-1}}{Q_{n-1}}+{Q_{n-1}}{P_{n-2}}).\]
+\normalsize
+
+\[b=\lim_{{h_1}\to +\infty}\alpha(h_1,h_2)={q_0}+\frac {Q_{n-1}}{P_{n-1}}.\]
+
+Таким образом, доказана
+\begin{theoremr}\label{PiskunovaTretyakov:th:7}
+Для ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y={q_0}+\cfrac {Q_{n-1}}{P_{n-1}}$.
+\end{theoremr}
+
+\begin{corollaryr}
+\begin{enumerate}
+\item[1) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]=o(h_{1})$;
+\item[2) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}] \ \sim \ {{q_0}+\cfrac {Q_{n-1}}{P_{n-1}}}$, при ${{h_{1}}\to +\infty}$.
+\end{enumerate}
+\end{corollaryr}
+
+
+Рассмотрим \emph{примеры} периодических ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},{t{q_0}}}]$,
+когда $h_1=1,\dots,8$, \ ${h_2}=1$, $t=5$ и $t=3$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler}
+а) при $n$ четном:
+$$\alpha(1)=[2,\overline{1,2,1,1,2,1,10}]=\frac {\sqrt{818}-15}{5}\approx 2,7201\dots$$
+$$\alpha(2)=[2,\overline{1,2,2,1,2,1,10}]=\frac {\sqrt{178933}-223}{74}\approx 2,7027\dots$$
+$$\alpha(3)=[2,\overline{1,2,3,1,2,1,10}]=\frac {\sqrt{78401}-148}{49}\approx 2,6939\dots$$
+$$\alpha(4)=[2,\overline{1,2,4,1,2,1,10}]=\frac {\sqrt{485813}-369}{122}\approx 2,6885\dots$$
+$$\alpha(5)=[2,\overline{1,2,5,1,2,1,10}]=\frac {\sqrt{173890}-221}{73}\approx 2,6849\dots$$
+$$\alpha(6)=[2,\overline{1,2,6,1,2,1,10}]=\frac {\sqrt{942845}-515}{170}\approx 2,6823\dots$$
+$$\alpha(7)=[2,\overline{1,2,7,1,2,1,10}]=\frac {\sqrt{306917}-294}{97}\approx 2,6804\dots$$
+$$\alpha(8)=[2,\overline{1,2,8,1,2,1,10}]=\frac {\sqrt{1550029}-661}{218}\approx 2,6789\dots$$
+б) при $n$ нечетном:
+\[\alpha(1)=[2,\overline{1,2,3,1,1,3,2,1,6}]=\frac {\sqrt{988037}-269}{269}\approx 2,6951\dots\]
+\[\alpha(2)=[2,\overline{1,2,3,2,1,3,2,1,6}]=\frac {\sqrt{8696605}-797}{798}\approx 2,6967\dots\]
+\[\alpha(3)=[2,\overline{1,2,3,3,1,3,2,1,6}]=\frac {\sqrt{3822026}-528}{529}\approx 2,6975\dots\]
+\[\alpha(4)=[2,\overline{1,2,3,4,1,3,2,1,6}]=\frac {\sqrt{23726645}-1315}{1318}\approx 2,6980\dots\]
+\[\alpha(5)=[2,\overline{1,2,3,5,1,3,2,1,6}]=\frac {\sqrt{8503057}-787}{789}\approx 2,6983\dots\]
+\[\alpha(6)=[2,\overline{1,2,3,6,1,3,2,1,6}]=\frac {\sqrt{46144853}-1833}{1838}\approx 2,6985\dots\]
+\[\alpha(7)=[2,\overline{1,2,3,7,1,3,2,1,6}]=\frac{\sqrt{15031130}-1046}{1049}\approx 2,6987\dots\]
+\[\alpha(8)=[2,\overline{1,2,3,8,1,3,2,1,6}]=\frac {\sqrt{75951229}-2351}{2358}\approx 2,6988\dots.\]
+\end{exampler}
+Таким образом, при фиксированном параметре $h_2$ рассматриваемые дроби возрастают при нечетном $n$, а убывают при четном $n$.
+
+Теперь зафиксируем переменную $h_1$.
+
+Аналогично доказывается
+
+\begin{theoremr}\label{PiskunovaTretuakox:th:8}
+Если $h_1$ --- фиксированный параметр, то ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},t{q_0}}]$ при нечетном $n$ убывают, а при четном $n$ возрастают, с ростом параметра $h_2$ и для любого $t$.
+\end{theoremr}
+
+Так же, как и в пункте 1, получаем:
+\[k=\lim_{{h_2}\to +\infty}\cfrac {\alpha(h_1,h_2)}{h_2}=\lim_{{h_2}\to +\infty}\cfrac {(2-t){q_0}K-(-1)^{n+1}+{R_1}}{2{h_2}K}=0,\]
+где $$R_1=t{q_0}{h_1}{P^{2}_{n-1}}+t{q_0}{P_{n-1}}{P_{n-2}}-(-1)^{n}+2{h_1}{P_{n-1}}{Q_{n-1}}+2{P_{n-1}}{Q_{n-2}},$$
+$$K={h_1}{P^{2}_{n-1}}+{P_{n-1}}{P_{n-2}}.$$
+
+Так как $k=0$, то \[b=\lim_{{h_2}\to +\infty}\alpha(h_1,h_2)={q_0}+\frac {{h_1}{Q_{n-1}}+{Q_{n-2}}}{{h_1}{P_{n-1}}+{P_{n-2}}}.\]
+
+
+Таким образом, имеет место
+\begin{theoremr}\label{PiskunovaTretyakov:th:9}
+Для ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y={q_0}+\cfrac {{h_1}{Q_{n-1}}+{Q_{n-2}}}{{h_1}{P_{n-1}}+{P_{n-2}}}$.
+\end{theoremr}
+
+\begin{corollaryr}
+\begin{enumerate}
+\item[1) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]=o(h_{2})$;
+\item[2) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}] \ \sim \ {{q_0}+\cfrac {{h_1}{Q_{n-1}}+{Q_{n-2}}}{{h_1}{P_{n-1}}+{P_{n-2}}}}$, при ${{h_{2}}\to +\infty}$.
+\end{enumerate}
+\end{corollaryr}
+
+
+Рассмотрим \emph{примеры} периодических ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},{t{q_0}}}]$,
+когда $h_2=1,\dots,8$, ${h_1}=1$, $t=3$ и $t=5$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler}
+а) при четном $n$:
+\[\alpha(1)=[2,\overline{1,2,1,1,2,1,6}]=\frac {\sqrt{346}-5}{5}\approx 2,7202\dots\]
+\[\alpha(2)=[2,\overline{1,2,1,2,2,1,6}]=\frac {\sqrt{75629}-73}{74}\approx 2,7298\dots\]
+\[\alpha(3)=[2,\overline{1,2,1,3,2,1,6}]=\frac {25\sqrt{53}-48}{49}\approx 2,7347\dots\]
+\[\alpha(4)=[2,\overline{1,2,1,4,2,1,6}]=\frac {\sqrt{205213}-119}{122}\approx 2,7377\dots\]
+\[\alpha(5)=[2,\overline{1,2,1,5,2,1,6}]=\frac {\sqrt{73442}-71}{73}\approx 2,7397\dots\]
+\[\alpha(6)=[2,\overline{1,2,1,6,2,1,6}]=\frac {\sqrt{398165}-165}{170}\approx 2,7411\dots\]
+\[\alpha(7)=[2,\overline{1,2,1,7,2,1,6}]=\frac {\sqrt{129601}-94}{97}\approx 2,7422\dots\]
+\[\alpha(8)=[2,\overline{1,2,1,8,2,1,6}]=\frac {\sqrt{654485}-211}{218}\approx 2,7431\dots\]
+б) при нечетном $n$:
+\[\alpha(1)=[2,\overline{1,2,3,1,1,3,2,1,10}]=\frac {5\sqrt{93881}-807}{269}\approx 2,6951\dots\]
+\[\alpha(2)=[2,\overline{1,2,3,1,2,3,2,1,10}]=\frac {\sqrt{20657029}-2395}{798}\approx 2,6942\dots\]
+\[\alpha(3)=[2,\overline{1,2,3,1,3,3,2,1,10}]=\frac {\sqrt{9078170}-1588}{529}\approx 2,6937\dots\]
+\[\alpha(4)=[2,\overline{1,2,3,1,4,3,2,1,10}]=\frac {\sqrt{56355053}-3957}{1318}\approx 2,6934\dots\]
+\[\alpha(5)=[2,\overline{1,2,3,1,5,3,2,1,10}]=\frac {\sqrt{20196037}-2369}{789}\approx 2,6932\dots\]
+\[\alpha(6)=[2,\overline{1,2,3,1,6,3,2,1,10}]=\frac {\sqrt{109599965}-5519}{1838}\approx 2,6931\dots\]
+\[\alpha(7)=[2,\overline{1,2,3,1,7,3,2,1,10}]=\frac{\sqrt{35700626}-3150}{1049}\approx 2,6930\dots\]
+\[\alpha(8)=[2,\overline{1,2,3,1,8,3,2,1,10}]=\frac {\sqrt{180391765}-7081}{2358}\approx 2,6929\dots.\]
+\end{exampler}
+Таким образом, при фиксированном параметре $h_1$ рассматриваемые дроби возрастают при четном $n$, а убывают при нечетном $n$.
+
+Исследуем теперь поведения указанных ЦД по параметру $t$.
+\begin{enumerate}
+\item[1)]
+будем считать, что параметр $t$ меняется непрерывно на полуинтервале $[2,+\infty)$.
+\end{enumerate}
+Продифференцируем функцию
+\[\alpha(h_{1},h_{2},t)=\cfrac{(2-t)A+B+\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}{2C}\]
+по переменной $t$:
+
+\[\alpha^{\prime}(h_{1},h_{2},t)=\cfrac{1}{2C}\Biggl(-A+\cfrac{2(tq_{0}C+F+E)\cdot C{q_{0}}}{2\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}\Biggr)=\]
+\[=\cfrac1{2C\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}\cdot \biggl(\bigl(tq_{0}C+F+E\bigr)Cq_{0}-A\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}\biggr)=\]
+\[=\cfrac1{2C\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}\cdot \cfrac {\bigl(tq_{0}C+F+E\bigr)^{2}C^{2}{q^{2}_{0}}-A^{2}\bigl(tq_{0}C+F+E\bigr)^{2}-4A^{2}}
+{\bigl(tq_{0}C+F+E\bigr)Cq_{0}+A\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}=\]
+\[=\cfrac{\bigl(tq_{0}C+F+E\bigr)^{2}({q^{2}_{0}}C^{2}-A^{2})-4A^{2}}{2C\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}\biggl(\bigl(tq_{0}C+F+E\bigr)q_{0}C+A\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}\biggr)}=\]
+\[=\cfrac {-4A^{2}}{2C\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}\biggl(\bigl(tq_{0}C+F+E\bigr)q_{0}C+A\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}\biggr)}<0.\]
+
+Здесь \[{q^{2}_{0}}C^{2}-A^{2}={q^{2}_{0}}\gamma^{2}(h)-{q^{2}_{0}}\gamma^{2}(h)=0,\]
+\[A=q_{0}\gamma(h), \ \ B=(-1)^{n+1}(h_{1}-h_{2}),\ \ C=\gamma(h), \ \ F=(-1)^{n}(h_{1}-h_{2}), \ \ E=2\delta(h),\]
+где \[\gamma(h)=\mu(h_{1})\mu(h_{2})+P^{2}_{n-1}, \ \ \delta(h)=\beta(h_{1})\mu(h_{2})+P_{n-1}Q_{n-1},\]
+\[\mu(h_{1})=P_{n-1}h_{1}+P_{n-2}, \ \ \mu(h_{2})=P_{n-1}h_{2}+P_{n-2}, \ \ \beta(h_{1})=Q_{n-1}h_{1}+Q_{n-2}.\]
+
+\begin{enumerate}
+\item[2)] теперь найдем наклонную асимптоту функции $\alpha(h_{1},h_{2},t)$ по $t$:
+\end{enumerate}
+\[k=\lim_{t\to +\infty}\cfrac{\alpha(t)}{t}=\lim_{t\to +\infty}\cfrac{-A+\cfrac{2A+B}{t}+\sqrt{\biggl(q_{0}C+\cfrac{F+E}{t}\biggr)^{2}}+\cfrac4{t^{2}}}{2C}=\]
+\[=\cfrac{-A+q_{0}C}{2C}=\cfrac{-q_{0}\gamma(h)+q_{0}\gamma(h)}{2C}=0.\]
+
+\[b=\lim_{t\to +\infty}\alpha(t)=\lim_{t\to +\infty}\cfrac{(2-t)A+B+\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}{2C}=\]
+\[=\cfrac1{2C}\lim_{t\to +\infty}\cfrac{(2-t)^{2}A^{2}+B^{2}+2(2-t)AB-\bigl(tq_{0}C+F+E\bigr)^{2}-4}{(2-t)A+B-\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}=\]
+\small \[=-\cfrac{1}{2C}\lim_{t\to +\infty}\cfrac{t^{2}\bigl(A^{2}-{q^{2}_{0}}C^{2}\bigr)-\bigl(4A^{2}+2AB+2q_{0}C(F+E)\bigr)t+4A(A+B)+B^{2}-F^{2}-E^{2}-4}
+{(t-2)A+B+\sqrt{\bigl(tq_{0}C+F+E\bigr)^{2}+4}}=\]
+\normalsize
+\[=- \ \cfrac{-\bigl(4A^{2}+2AB+2q_{0}C(F+E)\bigr)}{2C(A+q_{0}C)}=\cfrac{\bigl(4A^{2}+2AB+2q_{0}C(F+E)\bigr)}{2C(A+q_{0}C)}.\]
+
+
+Сформулируем то, что получилось в пунктах 1) и 2) в виде следующего предложения:
+\begin{theoremr}\label{PiskunovaTretyakov:th:10}
+\begin{enumerate}
+
+\item[1)] ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]$ убывают по $t$ для любых ${h_{1}},{h_{2}}$ и $n$;
+\item[2)] для ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y=\cfrac{\bigl(4A^{2}+2AB+2q_{0}C(F+E)\bigr)}{2C(A+q_{0}C)}$.
+\end{enumerate}
+\end{theoremr}
+
+%\begin{remarkr}
+%Отметим, что во всех случаях возрастания параметра \(t\), монотонность исследуемой дроби также фактически зависит от длины всего периода.
+%\end{remarkr}
+
+\begin{corollaryr}
+\begin{enumerate}
+\item[1) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}]=o(t)$;
+\item[2) ]$[{q_0},\overline{{q_1},\dots,{q_n},{h_{1}},{h_{2}},{q_n},\dots,{q_1},t{q_0}}] \ \sim \ {\cfrac{\bigl(4A^{2}+2AB+2q_{0}C(F+E)\bigr)}{2C(A+q_{0}C)}}$, при ${t\to +\infty}$ для любых $h_{1},h_{2}$.
+\end{enumerate}
+\end{corollaryr}
+
+\begin{corollaryr}
+Для ЦД вида $[{q_0},\overline{{q_1},\dots,{q_n},h,h,{q_n},\dots,{q_1},t{q_0}}]$ наклонная асимптота задается уравнением $y=\cfrac{F(h)q_{0}+G(h)}{F(h)}$, где $F(h)=\mu^{2}(h)+P^{2}_{n-1}, \ G(h)=\beta(h)\mu(h)+P_{n-1}Q_{n-1}$ \ (формулы для $\beta(h), \ \mu(h)$ смотреть в доказательстве теоремы 9).
+\end{corollaryr}
+
+В случае, когда $h_1 = h_2$, приходим к следствию \ref{PiskunovaTretyakov:cor:3}.
+
+
+Рассмотрим периодические ЦД вида $\alpha(t)=[{q_0},\overline{{q_1},\dots,{q_n},{h_1},{h_2},{q_n},\dots,{q_1},{t{q_0}}}]$,
+когда \(h_1=h_2=1\),\ $t\geq 2$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler}
+\[\alpha(2)=[2,\overline{3,4,1,1,4,3,4}]=\frac {\sqrt{38573}}{85}\approx 2,310589433\dots\]
+\[\alpha(3)=[2,\overline{3,4,1,1,4,3,6}]=\frac{\sqrt{274}-5}{5}\approx 2,310589071\dots\]
+\[\alpha(4)=[2,\overline{3,4,1,1,4,3,8}]=\frac {\sqrt{134249}-170}{85}\approx 2,310588877\dots\]
+\[\alpha(5)=[2,\overline{3,4,1,1,4,3,10}]=\frac {\sqrt{203762}-225}{85}\approx 2,310588756\dots\]
+\[\alpha(6)=[2,\overline{3,4,1,1,4,3,12}]=\frac {\sqrt{11509}-68}{17}\approx 2,310588673\dots\]
+\[\alpha(7)=[2,\overline{3,4,1,1,4,3,14}]=\frac {\sqrt{386138}-425}{85}\approx 2,310588613\dots\]
+\[\alpha(8)=[2,\overline{3,4,1,1,4,3,16}]=\frac{\sqrt{499001}-510}{85}\approx 2,310588568\dots\]
+\[\alpha(9)=[2,\overline{3,4,1,1,4,3,18}]=\frac {13\sqrt{3706}-595}{85}\approx 2,310588532\dots\]
+\[\alpha(10)=[2,\overline{3,4,1,1,4,3,20}]=\frac {\sqrt{768077}-680}{85}\approx 2,310588503\dots\]
+\end{exampler}
+
+Рассмотрим периодические ЦД вида $\alpha(t)=[{q_0},\overline{{q_1},\dots,{q_n},{h},{h},{q_n},\dots,{q_1},{t{q_0}}}]$,
+когда $h=1,\dots,8$, $t=5$ и $t=6$, при постоянных ${q_0},{q_1},\dots,{q_n}.$
+
+\begin{exampler} При четном $n$, $t$=5.
+\[\alpha(1)=[2,\overline{1,2,1,1,2,1,10}]=\frac {\sqrt{818}-15}{5}\approx 2,7201\dots\]
+\[\alpha(2)=[2,\overline{1,2,2,2,2,1,10}]=\frac {\sqrt{109562}-174}{58}\approx 2,7069\dots\]
+\[\alpha(3)=[2,\overline{1,2,3,3,2,1,10}]=\frac {\sqrt{385642}-327}{109}\approx 2,6972\dots\]
+\[\alpha(4)=[2,\overline{1,2,4,4,2,1,10}]=\frac {\sqrt{1026170}-534}{178}\approx 2,6910\dots\]
+\[\alpha(5)=[2,\overline{1,2,5,5,2,1,10}]=\frac {\sqrt{90842}-159}{53}\approx 2,6867\dots\]
+\[\alpha(6)=[2,\overline{1,2,6,6,2,1,10}]=\frac {\sqrt{4422610}-1110}{370}\approx 2,6837\dots\]
+\[\alpha(7)=[2,\overline{1,2,7,7,2,1,10}]=\frac {\sqrt{7845602}-1479}{493}\approx 2,6815\dots\]
+\[\alpha(8)=[2,\overline{1,2,8,8,2,1,10}]=\frac {\sqrt{12967202}-1902}{634}\approx 2,6798\dots\]
+\end{exampler}
+
+\begin{exampler} При нечетном $n$, $t$=6.
+\[\alpha(1)=[1,\overline{2,3,5,1,1,5,3,2,6}]=\frac {\sqrt{5146546}-1322}{661}\approx 1,4320\dots\]
+\[\alpha(2)=[1,\overline{2,3,5,2,2,5,3,2,6}]=\frac {\sqrt{740765090}-15860}{7930}\approx 1,4321\dots\]
+\[\alpha(3)=[1,\overline{2,3,5,3,3,5,3,2,6}]=\frac {13\sqrt{9698}-746}{373}\approx 1,43222\dots\]
+\[\alpha(4)=[1,\overline{2,3,5,4,4,5,3,2,6}]=\frac {\sqrt{7596691282}-50788}{25394}\approx 1,43226\dots\]
+\[\alpha(5)=[1,\overline{2,3,5,5,5,5,3,2,6}]=\frac {\sqrt{17220525530}-76466}{38233}\approx 1,43229\dots\]
+\[\alpha(6)=[1,\overline{2,3,5,6,6,5,3,2,6}]=\frac {\sqrt{1364460170}-21524}{10762}\approx 1,43231\dots\]
+\[\alpha(7)=[1,\overline{2,3,5,7,7,5,3,2,6}]=\frac {\sqrt{2451378730}-28850}{14425}\approx 1,43233\dots\]
+\[\alpha(8)=[1,\overline{2,3,5,8,8,5,3,2,6}]=\frac {\sqrt{102284192762}-186356}{93178}\approx 1,43234\dots.\]
+\end{exampler}
+Таким образом, рассматриваемые дроби возрастают при нечетном $n$, а при четном $n$ --- убывают.
+
+\begin{exampler} Построим график (см. рис. 1) функции
+\begin{center}
+$\alpha(h_1,h_2)=[1,\overline{2,1,2,{h_1},{h_2},2,1,2,2}],\ n=3,\ \cfrac {P_{n-1}}{Q_{n-1}}=\cfrac {P_2}{Q_2}=[2,1,2]=\cfrac 83,$
+\end{center}
+на котором можно наблюдать возрастание данной функции по $h_2$ и убывание по $h_1$.
+
+\begin{figure*}[h!]
+\includegraphics[scale=0.35]{articles/tretyakov/n3.jpg}
+\caption{}
+\end{figure*}
+\end{exampler}
+
+\newpage
+\begin{exampler} Аналогично строится график функции в случае четного $n$ (см. рис. 2).
+\begin{center}
+$\alpha(h_1,h_2)=[1,\overline{2,1,{h_1},{h_2},1,2,2}],\ n=2,\ \cfrac {P_{n-1}}{Q_{n-1}}=\cfrac {P_1}{Q_1}=[2,1]=\cfrac 31.$
+\end{center}
+
+\begin{figure*}[h!]
+\includegraphics[scale=0.35]{articles/tretyakov/ch2.jpg}
+\caption{}
+\end{figure*}
+\end{exampler}
+
+%\begin{figure*}[h!]
+%\includegraphics[scale=0.5]{articles/tretyakov/Images/image.jpg}
+%\caption{Вставка рисунка в формате JPG.}
+%\end{figure*}
+
+\section*{Заключение}
+
+Таким образом, в работе рассмотрены свойства монотонности ${t}$ - дискриминантов, а также ЦД более общего вида, при различном количестве параметров по каждому из них. Полученные результаты являются обобщением работы ~\cite{PiskunovaTretyakov:2017:5}.
+
+Основными результатами данной работы являются теоремы ~\ref{PiskunovaTretyakov:th:2} --- ~\ref{PiskunovaTretyakov:th:4}, ~\ref{PiskunovaTretyakov:th:6} --- ~\ref{PiskunovaTretyakov:th:10}.
+
+
+\begin{thebibliography}{10}
+
+\bibitem{Arnold2009}
+\tvimRefBook{Арнольд,\;В.\;И.}{Цепные дроби}{}{M.:Изд-во МЦНМО}{2009}{40}
+
+\smallskip %!!! Не англоязычные источники также предоставлять на английском языке !!!
+\tvimRefBookEn{ARNOLD,\;V.\;I.}{2009}{Continued fractions}{Moscow: Publishing house ICNMO}{40 p}
+
+\medskip
+\bibitem{BUKHSHTAB1966}
+\tvimRefBook{Бухштаб,\;А.\;А.}{Теория чисел}{}{M.:Просвещение}{1966}{384}
+
+\smallskip %!!! Не англоязычные источники также предоставлять на английском языке !!!
+\tvimRefBookEn{BUKHSHTAB,\;A.\;A.}{1966}{Number theory}{Moscow: Prosveshenie}{384 p}
+
+
+\medskip
+\bibitem{Piskunova:2018:3}
+\tvimRefArticle{Пискунова,\;В.\;В.}{Об асимптотических свойствах бесконечных периодических цепных дробей с параметрами}{}{Математика, информатика, компьютерные науки, моделирование, образование: сборник научных трудов Всероссийской научно-практической конференции МИКМО-2018 и Таврической научной школы-конференции студентов и молодых специалистов по математике и информатике}{Под ред. В.\;А.\;Лукьяненко}{Симферополь: ИП Корниенко,\;А.\;А.}{2018}{№\;2}{41--51}
+
+\smallskip
+\tvimRefArticleEn{PISKUNOVA,\;V.\;V.}{2018}{On the asymptotic properties of infinite periodic continued fractions with parameters}{Mathematics, informatics, computer science, modeling, education: a collection of scientific papers of the All-Russian Scientific and Practical Conference MIKMO-2018 and the Taurida Scientific School-Conference of Students and Young Specialists in Mathematics and Informatics}{}{2}{41--51}
+
+
+\medskip
+\bibitem{Piskunova:2018:4}
+\tvimRefArticle{Пискунова,\;В.\;В.}{Монотонность бесконечных периодических цепных дробей по параметрам}{}{Теория и практика приоритетных научных исследований. Сборник научных трудов по материалам IV Международной научно-практической конференции}{}{Смоленск: МНИЦ Наукосфера} {2018}{}{82--88}
+
+\smallskip
+\tvimRefArticleEn{PISKUNOVA,\;V.\;V.}{2018}{Monotonicity of infinite periodical continued fractions by parameters}{Theory and practice of priority research. Collection of scientific papers based on the IV International Scientific Practical Conference}{}{}{82--88}
+
+
+\medskip
+\bibitem{PiskunovaTretyakov:2017:5}
+\tvimRefArticle{Пискунова,\;В.\;В.}{Об одном классе бесконечных периодических цепных дробей}{Пискунова,\;В.\;В., Третьяков,\;Д.\;В.}
+{В книге: ДНИ НАУКИ КФУ им. В.И.ВЕРНАДСКОГО. Сборник тезисов участников III научно-практической конференции профессорско-преподавательского
+состава, аспирантов, студентов и молодых ученых}{}{Симферополь}{2017}{Т.\;7}{1109--1111}
+
+\smallskip
+\tvimRefArticleEn{PISKUNOVA,\;V.\;V., TRETYAKOV,\;D.\;V.}{2017}{On a class of infinite periodic continued fractions}{In the book: THE DAYS OF SCIENCE KFU them. VIVERADSKOGO. The collection of theses of the participants of the III scientific-practical conference of the teaching staff, post-graduate students, students and young scientists}{Vol.\;7}{}{1109--1111}
+
+
+\medskip
+\bibitem{PiskunovaTretyakov:2018:6}
+\tvimRefArticle{Пискунова,\;В.\;В.}{О монотонности $t$-дискриминантов с
+параметрами}{Пискунова,\;В.\;В., Третьяков,\;Д.\;В.}
+{В книге: ДНИ НАУКИ КФУ им. В.И.ВЕРНАДСКОГО. Сборник тезисов участников IV научно-практической конференции профессорско-преподавательского
+состава, аспирантов, студентов и молодых ученых}{}{Симферополь}{2018}{Т.\;2}{159--160}
+
+\smallskip
+\tvimRefArticleEn{PISKUNOVA,\;V.\;V., TRETYAKOV,\;D.\;V.}{2018}{On the monotony of $t$-discriminants with parameters}{In the book: THE DAYS OF SCIENCE KFU named after V.I.VERNADSKY. The collection of theses of the participants of the IV scientific-practical conference of the teaching staff, post-graduate students, students and young scientists}{Vol.\;2}{}{159--160}
+
+\medskip
+\bibitem{Tretyakov:2008:7}
+\tvimRefArticle{Третьяков,\;Д.\;В.}{Об одном обобщении уравнения Пелля}{}
+{Spectral and Evolution problems. International scientific journal.}{}{}{2008}{Vol.\;18}{141--147}
+
+\smallskip
+\tvimRefArticleEn{TRETYAKOV,\;D.\;V.}{2008}{On some generalization of Pell equation}{Spectral and Evolution problems. International scientific journal.}{Vol.18}{}{141--147}
+
+\medskip
+\bibitem{Trignan1994}
+\tvimRefBookEn{TRIGNAN,\;J.\;L.}{1994}{Introduction aux probl\`{e}mes d'approximation: fractions continues, diff\`{e}rences finies}{\`{E}ditions du Choix. Rue de m\`{e}dicis, Paris: Albert Blanchard}{101 p}
+
+
+\end{thebibliography}
+
+\label{Piskunova_V_V_Tret'jakov_D_V_end}
