@@ -1,0 +1,14 @@
+tvim:
+    year: 2020
+    number: 3
+    total number: 48
+    protocol number: 4
+    protocol day: 30
+    protocol month: 11
+    protocol month name: ноября
+    protocol year: 2020
+path:
+    articles: articles_2020_3
+    resources: resources
+    docs: docs
+    output: output

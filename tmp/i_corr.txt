@@ -1,0 +1,74 @@
+\medskip
+\bibitem{hasegawa}\tvimRefBookEn{Hasegawa,\;A.,\;Matsumoto,\;M.,\;Kattan,\;PI.}{2000}{Optical Solitons in Fibers}{}{3rd ed.New York: Springer-Verlag}
+
+\medskip
+\bibitem{brandt}
+\tvimRefArticleEn{Brandt-Pearce,\;M.,\;Jacobs,\;I.,\;Shaw,\;JK.}{1999}{Optimal input Gaussian pulse width for transmission in dispersive nonlinear fiber}{Journal of the Optical Society of America B}{16}{}{1189-1196}
+
+\medskip
+\bibitem{taha}
+\tvimRefArticleEn{Taha,\;T.\;R. and Ablowitz,\;M.\;J.}{1984}{Analytical and Numerical Aspects of Certain Nonlinear Evolution Equations. II.  Numerical, Nonlinear Schrodinger Equation}{Journal of Computational Physics}{55}{}{203-230}
+
+\medskip
+\bibitem{zhang}
+\tvimRefArticleEn{Zhang,\;L.}{2005}{A High Accurate and Conservative Finite Difference Scheme for Nonlinear Schrodinger Equation}{Acta Mathematicae Applicatae Sinica}{28}{}{178-186}
+
+\medskip
+\bibitem{duan}
+\tvimRefArticleEn{Duan,\;A.,\;Rong,\;F.\;A.}{2013}{Numerical Scheme for Nonlinear Schrodinger Equation by MQ Quasi-Interpolatin}{Engineering Analysis with Boundary Elements}{37}{}{89-94}
+
+\medskip
+\bibitem{dag}
+\tvimRefArticleEn{Dag,\;I.}{1999}{A Quadratic B-Spline Finite Element Method for Solving Nonlinear Schrodinger Equation}{Computer  Methods in Applied Mechanics and Engineering}{174}{}{247-258}
+
+\medskip
+\bibitem{dehghan1}
+\tvimRefArticleEn{Dehghan,\;M.,\;Taleei,\;A.}{2010}{A  Compact Split-Step Finite Difference Method for  Solving  the  Nonlinear  Schrodinger Equations with Constant and Variable Coefficients}{Computer Physics Communications}{181}{}{43-51}
+
+\medskip
+\bibitem{dehghan2}
+\tvimRefArticleEn{Dehghan,\;M. and Taleei,\;A.\;A.}{2011}{Chebyshev Pseudospectral Multidomain Method for the Soliton Solution of  Coupled Nonlinear Schrodinger Equations}{Computer Physics Communications}{182}{}{2519-2519}
+
+\medskip
+\bibitem{mohammadi}
+\tvimRefArticleEn{Mohammadi,\;R.}{2014}{An Exponential Spline Solution of Nonlinear Schrodinger Equations with Constant and Variable Coefficients}{Computer Physics Communications}{185}{}{917-932}
+
+\medskip
+\bibitem{lin1}
+\tvimRefArticleEn{Lin,\;B.}{2013}{Parametric Cubic Spline Method for the Solution  of the Nonlinear  Schrodinger  Equation}{Computer Physics Communications}{184}{}{60-65}
+
+\medskip
+\bibitem{lin2}
+\tvimRefArticleEn{Lin,\;B.}{2015}{Septic Spline Function Method for the Solution  of the Nonlinear Schrodinger  Equation}{Applicable  Analysis}{94}{}{279-293}
+
+\medskip
+\bibitem{zakharov}
+\tvimRefArticleEn{Zakharov,\;V.\;E.,\;Shabat,\;A.\;B.}{1971}{Exact theory of two-dimensional self-focusing and one-dimensional self-modulation of waves in nonlinear media}{JETP 61, № 1}{118-1-134}{}{62}
+
+\medskip
+\bibitem{takhtajan}
+\smallskip
+\tvimRefBookEn{Faddeev,\;L.\;D.,\;Takhtajan,\;L.\;A.}{2007}{Hamiltonian Methods in the Theory of Solitons}{}{Springer-Verlag Берлин Гейдельберг}
+
+\medskip
+\bibitem{ablowitz}
+\tvimRefArticleEn{Ablowitz,\;M.\;J.,\;Kaup,\;D.\;J.,\;Newell,\;A.\;C.,\;Segur,\;H.}{1974}{The
+inverse scattering transform-Fourier analysis for nonlinear
+problems}{Stud. Appl. Math 53}{4}{}{249-315}
+
+\medskip
+\bibitem{ljance}
+\tvimRefArticleEn{Ljance,\;V.\;E.}{1964}{A differential operator with spectral singularities, I}{Math col., 64(106)}{4}{}{521-561}
+
+\medskip
+\bibitem{lam}
+\tvimRefBookEn{Lam,\;D.\;L.\;}{1984}{Introduction to Soliton Theory}{}{Moscow: Nauka}
+
+\medskip
+\bibitem{Bonis}
+\tvimRefArticleEn{Bonis,\;M.\;C.\;De,\;Mastroianni,\;G.}{2009}{Nystrom method for systems of integral equations on the real semiaxis}{Journal of Numerical Analysis}{29}{}{632–650}
+
+
+\medskip
+\bibitem{Aric}
+\tvimRefArticleEn{Aric\`{o}, A., Rodriguez, G., Seatzu, S.}{2011}{Numerical solution of the nonlinear Schr\"{o}dinger equation, starting from the scattering data}{Calcolo}{}{48}{75–88}

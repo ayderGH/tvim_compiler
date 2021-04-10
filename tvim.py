@@ -106,10 +106,21 @@ class Article(ArticleBase):
         return text.strip()
 
     @staticmethod
-    def select_tag(tag, text, default=None):
+    def _check_balance_of_parantheses(s):
+        counter = 0
+        for ch in s:
+            if ch == '{':
+                counter += 1
+            elif ch == '}':
+                counter -= 1
+        return counter
+
+    def select_tag(self, tag, text, default=None):
         m = re.search(tag + r'{.*?}+', text, flags=re.DOTALL)
         if m:
             t = text[m.start() + len(tag):m.end() - 1]
+            # if not self._check_balance_of_parantheses(t):
+            #     i = m.end()
             t = re.sub(r'\n', ' ', t, flags=re.DOTALL)
             t = re.sub(r' {2,}', ' ', t, flags=re.DOTALL)
             return t
@@ -389,8 +400,25 @@ class Article(ArticleBase):
                 self.article_text = self.article_text[:m.start()] \
                     + '\\title{{{}}}'.format(upper_title) \
                     + self.article_text[m.start():]
-            with open('/Users/ayder/Desktop/out.tex', 'wt') as f:
-                f.write(self.article_text)
+
+    def update_section(self, section):
+        # TODO: replace by regular expression
+        pattern = f'\\section{{{section}}}'
+        bold_pattern = f'\\section{{\\textbf{{{section}}}}}'
+        pattern_with_asterix = f'\\section*{{{section}}}'
+        bold_pattern_with_asterix = f'\\section*{{\\textbf{{{section}}}}}'
+        if pattern in self.article_text:
+            self.article_text = self.article_text.replace(pattern,
+                                                          bold_pattern)
+        elif pattern_with_asterix in self.article_text:
+            self.article_text = self.article_text.replace(
+                pattern, bold_pattern_with_asterix)
+
+        if bold_pattern not in self.article_text \
+                and bold_pattern_with_asterix not in self.article_text:
+            logger.warning(f"Раздел `{section}` "
+                           f"в статье `{self.title['ru']}` "
+                           f"не был выделен жирным!")
 
     art_path = property(lambda self: os.path.join(self.path, '__article.tex'))
 
@@ -426,6 +454,8 @@ class Article(ArticleBase):
                 self.article_text + '\n\n' + \
                 fr'\label{{{self.end_label}}}'
             self.update_title()
+            for s in self.sections:
+                self.update_section(s)
             self.update_image_path()
             with open(self.art_path, 'wt') as f:
                 f.write(self.article_text)
@@ -580,13 +610,15 @@ class TvimDocument:
 
         for art in articles:
             art_path = os.path.join(articles_path, art)
+            article = None
             if art.startswith('_'):
                 article = VerbatimArticle(art_path)
                 self.verbatim_articles.append(article)
-            else:
+            elif not art.startswith('-'):
                 article = Article(art_path)
                 self.articles.append(article)
-            article.compile()
+            if article:
+                article.compile()
 
         self.articles = sorted(self.articles, key=lambda a: a.authors_str)
 

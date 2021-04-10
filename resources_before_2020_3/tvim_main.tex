@@ -1,0 +1,132 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Основной файл верстки журнала ТВИМ
+%%%%% факультет математики и информатики
+%%%%% Крымский федеральный университет им. В.И. Вернадского
+%%%%% гл. ред. Донской В.И., Копачевский Н.Д.,
+%%%%% ответственные редакторы Анафиев А.С., Войтицкий В.И.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, a4paper, reqno, intlimits]{amsart}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[ruled]{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage{multicol}
+\usepackage{mathtext}
+\usepackage[T2A]{fontenc}
+\usepackage[english, russian]{babel}
+\usepackage{amsfonts, amsmath, amsxtra, amsthm, amssymb, latexsym, mathrsfs,
+srcltx, dsfont, hhline}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{wasysym}
+\usepackage{calrsfs}
+\usepackage{verbatim}
+\usepackage{euscript}
+\usepackage[usenames]{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{mdframed}
+\usepackage{setspace}
+\usepackage{titletoc}
+\usepackage{ragged2e}
+\usepackage{tvim}
+\usepackage{chngcntr}
+\usepackage{pb-diagram}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{tabularx}
+\usepackage{floatflt}
+
+\newcommand{\E}{\eqno}
+
+%%%  Межстрочный интервал
+\def\baselinestretch{1.2}
+
+
+%%%  Задаём параметры выпуска
+\input{__params__}
+\input{__params_en__}
+\input{__bib_templates__}
+
+%%%  Отступ
+\myparindent=\parindent
+
+
+\begin{document}
+
+    %%%  Переопределяем крупные шрифты
+    \makeatletter
+    \renewcommand\Huge{\@setfontsize\Large{100}{100}}
+    \renewcommand\Large{\@setfontsize\Large{20}{20}}
+    \makeatother
+
+
+    %%%  Первые страницы выпуска
+    \input{first_page}
+    \newpage
+    \input{first_page_en}
+    \newpage%
+    \input{second_page}
+    \newpage
+    \input{second_page_en}
+
+    %%%  Содержание
+    \renewcommand{\contentsname}{\bf СОДЕРЖАНИЕ}
+    \input{contents}
+
+    \newpage
+    \input{englishTOC}
+    \englishtableofcontents
+
+
+    %%%  Не ругаться на переполнения
+    \sloppy
+
+
+    %%%  Задаём вид и содержание колонтитулов
+    \makeatletter
+
+        \renewcommand{\@evenhead}{\raisebox{0pt}[\headheight][0pt]{%
+            \vbox{\hbox to\textwidth{{\rm\thepage}\hfil\strut
+{\sl\leftmark}\hfil}\hrule}}}
+
+        \renewcommand{\@oddhead}{\raisebox{0pt}[\headheight][0pt]{%
+            \vbox{\hbox to\textwidth{\hfil\strut
+{\sl\rightmark}\hfil{\rm\thepage}}\hrule}}}
+
+        \renewcommand{\@evenfoot} {%
+            \vbox{\hbox to\textwidth{\hfil\strut{\tiny
+            \textit{\textbf{``Taurida Journal of Computer Science Theory and
+Mathematics'', \tvimyear, \tvimnumberen}}}}}}
+
+        \renewcommand{\@oddfoot} {%
+            \vbox{\hbox to\textwidth{\hfil\strut{\tiny
+            \textit{\textbf{<<Таврический вестник информатики и математики>>,
+\tvimnumber'\,\tvimyear}}}}}}
+
+    \makeatother
+
+
+    %%%  Определяем вид нумераций
+    \pagenumbering{arabic}
+    %%%  Определяем начальную страницу для статей
+    \setcounter{page}{6}
+
+
+    %%%  Статьи выпуска
+    \input{articles}
+
+
+    %%%  Рефераты выпуска
+    \input{referats}
+
+    %%%  Список авторов выпуска
+    \input{authors}
+
+    %%%  Последняя страница
+    \input{last_page}
+
+\end{document} 
