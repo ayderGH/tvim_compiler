@@ -67,8 +67,9 @@ class Article(ArticleBase):
     """
     Объектная модель статьи журнала.
     """
-    def __init__(self, path):
+    def __init__(self, path, lang='ru'):
         super().__init__(path)
+        self.lang = lang
         self.title = {}
         self.authors = {}
         self.author_details = []
@@ -101,7 +102,9 @@ class Article(ArticleBase):
             textit
         """
         text = re.sub(r'\\textbf|\\textit|\\it|\\bf', '', text)
-        text = re.sub(r'[{|}]', '', text)
+        if text.startswith('{') and text.endswith('}'):
+            text = text[1:-1]
+        # text = re.sub(r'[{|}]', '', text)
         text = re.sub(r'\s{2,}', ' ', text)
         return text.strip()
 
@@ -243,6 +246,7 @@ class Article(ArticleBase):
             t = get_text_between_braces(text, m.end())
             if t:
                 self.sections.append(self.normalize_text(t[0]))
+        print(self.sections)
         if not self.sections:
             logger.error('Не найдены разделы в {}!'.format(self.path))
 
@@ -407,12 +411,13 @@ class Article(ArticleBase):
         bold_pattern = f'\\section{{\\textbf{{{section}}}}}'
         pattern_with_asterix = f'\\section*{{{section}}}'
         bold_pattern_with_asterix = f'\\section*{{\\textbf{{{section}}}}}'
+
         if pattern in self.article_text:
             self.article_text = self.article_text.replace(pattern,
                                                           bold_pattern)
         elif pattern_with_asterix in self.article_text:
             self.article_text = self.article_text.replace(
-                pattern, bold_pattern_with_asterix)
+                pattern_with_asterix, bold_pattern_with_asterix)
 
         if bold_pattern not in self.article_text \
                 and bold_pattern_with_asterix not in self.article_text:
@@ -448,7 +453,7 @@ class Article(ArticleBase):
             self.remove_russian_abstract()
             self.article_text = \
                 r'\input{__init_counters__}' + '\n' + \
-                r'\input{__to_rus__}' + '\n\n' + \
+                f'\\input{{__to_{self.lang}__}}' + '\n\n' + \
                 self.add_content_lines() + \
                 fr'\label{{{self.begin_label}}}' + '\n\n' + \
                 self.article_text + '\n\n' + \
@@ -588,9 +593,11 @@ class TvimDocument:
         if horzline:
             template += '\\abstractLine{{0.5cm}}{{0.7cm}}\n\n'
 
+        title = re.sub(r'\\footnote{.*?}', '', article.title['ru'])
+
         return template.format(authors_fio=article.authors_str,
                                authors_iof=article.authors_str_reverse,
-                               title=article.title['ru'],
+                               title=title,
                                begin_label=article.begin_label,
                                end_label=article.end_label,
                                udc=article.udc,
@@ -615,7 +622,13 @@ class TvimDocument:
                 article = VerbatimArticle(art_path)
                 self.verbatim_articles.append(article)
             elif not art.startswith('-'):
-                article = Article(art_path)
+                if art.endswith('_en'):
+                    lang = 'eng'
+                elif art.endswith('_ukr'):
+                    lang = 'ukr'
+                else:
+                    lang = 'rus'
+                article = Article(art_path, lang)
                 self.articles.append(article)
             if article:
                 article.compile()
